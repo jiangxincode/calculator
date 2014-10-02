@@ -32,6 +32,7 @@ int Conversion(char num[20], int t, int n)
                 else
                 {
                         perror("error:Conversion");
+                        exit(1);
                 }
                 p=p+r*(pow ((double)t,(double)(x-j-1)));//计算结果
         }
@@ -51,6 +52,7 @@ int Conversion(char num[20], int t, int n)
                         else
                         {
                                 perror("error:Conversion");
+                                exit(1);
                         }
                         p=p+r*(pow ((double)t, (double)(x-j)));
                 }
@@ -62,6 +64,7 @@ int Conversion(char num[20], int t, int n)
                 {
                         p=-p;
                 }
+                strcpy(out, num);
                 return 0;
         }
         else //如果要转换成其他进制

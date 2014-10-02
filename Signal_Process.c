@@ -52,30 +52,15 @@ void Binary_Operator()          /*双目运算*/
         hasdot=0;   /*表示已经没有小数点*/
 }
 
-void Right_output()
+void Right_output() /*单目运算结果输出*/
 {
         char num[20];
-        gcvt(a,32,num);             /*运算结果转换成字符串*/
-        if(principle==16)
+        if(gcvt(a,32,num) == NULL)   /*运算结果转换成字符串*/
         {
-                Conversion(num,10,16);   /*将运算结果（十进制字符串）转换成十六进制数*/
-                gtk_entry_set_text(GTK_ENTRY(entry),out);     /*显示结果*/
+                perror("error:Right_output");
         }
-        if(principle==10)
-        {
-                //gcvt(a,32,num);             /*运算结果转换成字符串*/
-                gtk_entry_set_text(GTK_ENTRY(entry),num);     /*直接显示结果*/
-        }
-        if(principle==8)
-        {
-                Conversion(num,10,8);    /*将运算结果（十进制字符串）转换成八进制数*/
-                gtk_entry_set_text(GTK_ENTRY(entry),out);     /*显示结果*/
-        }
-        if(principle==2)
-        {
-                Conversion(num,10,2);    /*将运算结果（十进制字符串）转换成二进制数*/
-                gtk_entry_set_text(GTK_ENTRY(entry),out);     /*显示结果*/
-        }
+        Conversion(num, 10, principle); /*将运算结果（十进制字符串）转换成指定进制数*/
+        gtk_entry_set_text(GTK_ENTRY(entry),out);     /*显示结果*/
         a=0;
         b=0;
         method=0;
@@ -89,29 +74,12 @@ float fun(int c)   /*递归函数求阶乘*/
         return d;
 }
 
-void output()
+void output() /*双目运算结果输出*/
 {
         char num[20]="0";
         strcpy(num, gtk_entry_get_text(GTK_ENTRY(entry)));   /* 取得文本框输入的内容*/
-        if(principle==16)
-        {
-                Conversion(num,16,10);  /*将输入的十六进制数转换为十进制*/
-                b=p;
-        }
-        if(principle==10)
-        {
-                b=atof(num);            /*直接转换成浮点型*/
-        }
-        if(principle==8)
-        {
-                Conversion(num,8,10);   /*将输入的八进制数转换为十进制*/
-                b=p;
-        }
-        if(principle==2)
-        {
-                Conversion(num,2,10);   /*将输入的二进制数转换为十进制*/
-                b=p;
-        }
+        Conversion(num, principle, 10); /*将输入的进制数转换为十进制*/
+        b = p;
         switch(method)
         {
         case 0:
@@ -132,8 +100,7 @@ void output()
                         a=0;
                         b=0;
                         method=0;
-                        gtk_entry_set_text (GTK_ENTRY(entry),
-                                            g_locale_to_utf8("除数不能为零",-1,NULL,NULL,NULL)); /*显示出错信息*/
+                        gtk_entry_set_text (GTK_ENTRY(entry),g_convert("除数不能为零",-1,"UTF-8","GB2312",NULL,NULL,NULL)); /*显示出错信息*/
                 }
                 else
                 {
@@ -163,8 +130,7 @@ void output()
                         a=0;
                         b=0;
                         method=0;
-                        gtk_entry_set_text (GTK_ENTRY(entry),
-                                            g_locale_to_utf8("除数不能为零",-1,NULL,NULL,NULL)); /*显示出错信息*/
+                        gtk_entry_set_text (GTK_ENTRY(entry), g_convert("除数不能为零",-1,"UTF-8","GB2312",NULL,NULL,NULL)); /*显示出错信息*/
                 }
                 else
                 {
@@ -202,8 +168,7 @@ void output()
                         a=0;
                         b=0;
                         method=0;
-                        gtk_entry_set_text (GTK_ENTRY(entry),
-                                            g_locale_to_utf8("对数必须为正数",-1,NULL,NULL,NULL)); /*显示出错信息*/
+                        gtk_entry_set_text (GTK_ENTRY(entry), g_convert("对数必须为正数",-1,"UTF-8","GB2312",NULL,NULL,NULL)); /*显示出错信息*/
                 }
                 else
                 {
@@ -217,8 +182,7 @@ void output()
                         a=0;
                         b=0;
                         method=0;
-                        gtk_entry_set_text (GTK_ENTRY(entry),
-                                            g_locale_to_utf8("对数必须为正数",-1,NULL,NULL,NULL)); /*显示出错信息*/
+                        gtk_entry_set_text (GTK_ENTRY(entry), g_convert("对数必须为正数",-1,"UTF-8","GB2312",NULL,NULL,NULL)); /*显示出错信息*/
                 }
                 else
                 {
@@ -232,8 +196,7 @@ void output()
                         a=0;
                         b=0;
                         method=0;
-                        gtk_entry_set_text (GTK_ENTRY(entry),
-                                            g_locale_to_utf8("函数输入无效",-1,NULL,NULL,NULL)); /*显示出错信息*/
+                        gtk_entry_set_text (GTK_ENTRY(entry), g_convert("函数输入无效",-1,"UTF-8","GB2312",NULL,NULL,NULL)); /*显示出错信息*/
 
                 }
                 else
@@ -248,8 +211,7 @@ void output()
                         a=0;
                         b=0;
                         method=0;
-                        gtk_entry_set_text (GTK_ENTRY(entry),
-                                            g_locale_to_utf8("除数不能为零",-1,NULL,NULL,NULL)); /*显示出错信息*/
+                        gtk_entry_set_text (GTK_ENTRY(entry), g_convert("除数不能为零",-1,"UTF-8","GB2312",NULL,NULL,NULL)); /*显示出错信息*/
                 }
                 else
                 {
@@ -412,7 +374,10 @@ void Sign()
         strcpy(num, gtk_entry_get_text(GTK_ENTRY(entry)));/*取得文本框的内容。*/
         c=atof(num);             /*转换成浮点型*/
         c=-c;
-        gcvt(c,32,num);          /*结果转换成字符串*/
+        if(gcvt(c,32,num) == NULL)  /*结果转换成字符串*/
+        {
+                perror("error:Sign");
+        }
         gtk_entry_set_text(GTK_ENTRY(entry),num);    /*显示结果*/
 }
 
