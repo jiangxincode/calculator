@@ -10,20 +10,25 @@ void on_clicked(GtkWidget *widget, gpointer data)
                         show_Hex_window();
                         principle=16;
                 }
-                if(strncmp((char *)data, "Dec", 3)==0)
+                else if(strncmp((char *)data, "Dec", 3)==0)
                 {
                         show_Dec_window();
                         principle=10;
                 }
-                if(strncmp((char *)data, "Oct", 3)==0)
+                else if(strncmp((char *)data, "Oct", 3)==0)
                 {
                         show_Oct_window();
                         principle=8;
                 }
-                if(strncmp((char *)data, "Bin", 3)==0)
+                else if(strncmp((char *)data, "Bin", 3)==0)
                 {
                         show_Bin_window();
                         principle=2;
+                }
+                else
+                {
+                        perror("error:on_clicked");
+                        exit(1);
                 }
         }
 }
@@ -35,48 +40,14 @@ void Binary_Operator()          /*双目运算*/
         strcpy(num, gtk_entry_get_text(GTK_ENTRY(entry)));/*取得文本框的内容*/
         if(a==0)                      /*如果没有第一个数，则存储为第一个数*/
         {
-                if(principle==16)
-                {
-                        Conversion (num,16,10); /*将输入的十六进制数转换为十进制*/
-                        a=p;
-                }
-                if(principle==10)
-                {
-                        a=atof(num);           /*直接转换成浮点型*/
-                }
-                if(principle==8)
-                {
-                        Conversion (num,8,10);  /*将输入的八进制数转换为十进制*/
-                        a=p;
-                }
-                if(principle==2)
-                {
-                        Conversion (num,2,10);  /*将输入的二进制数转换为十进制*/
-                        a=p;
-                }
+                Conversion(num,principle,10); //全部转为十进制
+                a = p;
                 gtk_entry_set_text(GTK_ENTRY(entry),"");  /*清空文本框*/
         }
         else        /*如果已有第一个数，则应存储为第二个数*/
         {
-                if(principle==16)
-                {
-                        Conversion(num,16,10);  /*将输入的十六进制数转换为十进制*/
-                        b=p;
-                }
-                if(principle==10)
-                {
-                        b=atof(num);            /*直接转换成浮点型*/
-                }
-                if(principle==8)
-                {
-                        Conversion(num,8,10);   /*将输入的八进制数转换为十进制*/
-                        b=p;
-                }
-                if(principle==2)
-                {
-                        Conversion(num,2,10);   /*将输入的二进制数转换为十进制*/
-                        b=p;
-                }
+                Conversion(num,principle,10); //全部转为十进制
+                b = p;
         }
         hasdot=0;   /*表示已经没有小数点*/
 }

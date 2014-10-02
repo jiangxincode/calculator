@@ -5,28 +5,24 @@ int main (int argc, char *argv[])
         a=0;
         b=0;
         hasdot=0;
-        gtk_set_locale();
-        gtk_rc_add_default_file("./gtkrc.zh_CN");
-        gtk_init (&argc,&argv);      /* 建立窗口。*/
+        gtk_init (&argc,&argv);
         method=0;                    /*运算方法。*/
         window=gtk_window_new (GTK_WINDOW_TOPLEVEL);
-        gtk_window_set_title (GTK_WINDOW (window),
-                              g_locale_to_utf8("我的计算器",-1,NULL,NULL,NULL));
+        gtk_window_set_title (GTK_WINDOW (window),g_convert("我的计算器",-1,"UTF-8","GB2312",NULL,NULL,NULL));
 
-        vbox = gtk_vbox_new (FALSE, 0); /*创建一个垂直框*/
+        vbox = gtk_vbox_new (FALSE, 0);
         gtk_container_add (GTK_CONTAINER (window), vbox);
-        gtk_widget_show (vbox);
+
         table1 = gtk_table_new (2,4,FALSE);       /*建立一个2行4列的表格1*/
         gtk_box_pack_start (GTK_BOX (vbox), table1, TRUE, FALSE, 0);
-        gtk_widget_show (table1);
+
         table2= gtk_table_new (5,9,FALSE);       /*建立一个5行9列的表格*/
         gtk_box_pack_start (GTK_BOX (vbox), table2, TRUE, FALSE, 0);
-        gtk_widget_show (table2);
+
         entry = gtk_entry_new ( );                 /*用于输入和输出的文本框*/
         gtk_table_attach (GTK_TABLE (table1), entry, 0, 4, 0, 1,
                           (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                           (GtkAttachOptions) (0),0,0);
-        gtk_widget_show (entry);
 
         button1 = gtk_button_new_with_mnemonic("pi");       /*pi*/
         gtk_table_attach (GTK_TABLE (table2), button1, 0, 1, 0, 1,
@@ -270,44 +266,37 @@ int main (int argc, char *argv[])
                           (GtkAttachOptions) (0), 0, 0);
 
         /*下面是创建四个单选按钮，并将"十进制"按钮设置为默认选中*/
-        radio = gtk_radio_button_new_with_label (NULL,
-                        g_locale_to_utf8("十六进制",-1,NULL,NULL,NULL));
-        g_signal_connect(GTK_OBJECT(radio),"clicked",
-                         G_CALLBACK(on_clicked),"Hex");
+        radio = gtk_radio_button_new_with_label (NULL,g_convert("十六进制",-1,"UTF-8","GB2312",NULL,NULL,NULL));
+        g_signal_connect(GTK_OBJECT(radio),"clicked",G_CALLBACK(on_clicked),"Hex");
         gtk_table_attach (GTK_TABLE (table1), radio, 0, 1, 1, 2,
                           (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                           (GtkAttachOptions) (0),0,0);
-        gtk_widget_show (radio);
+
         group = gtk_radio_button_group (GTK_RADIO_BUTTON(radio));
-        radio = gtk_radio_button_new_with_label (group,
-                        g_locale_to_utf8("十进制",-1,NULL,NULL,NULL));
-        g_signal_connect(GTK_OBJECT(radio),"clicked",
-                         G_CALLBACK(on_clicked),"Dec");
-        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(radio),TRUE);/*十进制radio设置为默认选中状态*/
+        radio = gtk_radio_button_new_with_label (group,g_convert("十进制",-1,"UTF-8","GB2312",NULL,NULL,NULL));
+        g_signal_connect(GTK_OBJECT(radio),"clicked",G_CALLBACK(on_clicked),"Dec");
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(radio),TRUE); /*十进制radio设置为默认选中状态*/
         gtk_table_attach (GTK_TABLE (table1), radio, 1, 2, 1, 2,
                           (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                           (GtkAttachOptions) (0),0,0);
-        gtk_widget_show (radio);
+
         group = gtk_radio_button_group (GTK_RADIO_BUTTON(radio));
-        radio = gtk_radio_button_new_with_label (group,
-                        g_locale_to_utf8("八进制",-1,NULL,NULL,NULL));
-        g_signal_connect(GTK_OBJECT(radio),"clicked",
-                         G_CALLBACK(on_clicked),"Oct");
+        radio = gtk_radio_button_new_with_label (group,g_convert("八进制",-1,"UTF-8","GB2312",NULL,NULL,NULL));
+        g_signal_connect(GTK_OBJECT(radio),"clicked", G_CALLBACK(on_clicked),"Oct");
         gtk_table_attach (GTK_TABLE (table1), radio, 2, 3, 1, 2,
                           (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                           (GtkAttachOptions) (0),0,0);
-        gtk_widget_show (radio);
+
         group = gtk_radio_button_group (GTK_RADIO_BUTTON(radio));
-        radio = gtk_radio_button_new_with_label (group,
-                        g_locale_to_utf8("二进制",-1,NULL,NULL,NULL));
-        g_signal_connect(GTK_OBJECT(radio),"clicked",
-                         G_CALLBACK(on_clicked),"Bin");
+        radio = gtk_radio_button_new_with_label (group,g_convert("二进制",-1,"UTF-8","GB2312",NULL,NULL,NULL));
+        g_signal_connect(GTK_OBJECT(radio),"clicked", G_CALLBACK(on_clicked),"Bin");
         gtk_table_attach (GTK_TABLE (table1), radio, 3, 4, 1, 2,
                           (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                           (GtkAttachOptions) (0),0,0);
-        gtk_widget_show (radio);
+
         addsignal ();                 /*添加事件。*/
-        gtk_widget_show (window);
+
+        gtk_widget_show_all(window);
         gtk_main ();
         return 0;
 }

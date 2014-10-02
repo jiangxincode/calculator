@@ -13,7 +13,8 @@ double p;
 int hasdot;          /*是否有小数点*/
 int method;          /*用于区别不同的运算*/
 int principle;       /*标识不同的进制*/
-char out[20];
+char out[20]; /*输出结果*/
+
 GtkWidget *window;   /*这一部分是定义元件*/
 GtkWidget *vbox;     /*垂直框*/
 GtkWidget *table1;   /*表格1*/
