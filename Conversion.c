@@ -7,9 +7,9 @@ int Conversion(char num[20], int t, int n)
         ii=0;
         p=0;
         memset(out,0,20);
-        m=strlen(num);//Çó×Ö·û´®µÄ³¤¶È
+        m=strlen(num);//æ±‚å­—ç¬¦ä¸²çš„é•¿åº¦
         x=m;
-        for(k=0; k<m; k++) //Ö÷ÒªÊÇ·Ö¶Î£¬ÒÔÐ¡ÊýµãÎª½çÏÞ£¬Ö»×ª»»ÕûÊý²¿·Ö
+        for(k=0; k<m; k++) //ä¸»è¦æ˜¯åˆ†æ®µï¼Œä»¥å°æ•°ç‚¹ä¸ºç•Œé™ï¼Œåªè½¬æ¢æ•´æ•°éƒ¨åˆ†
         {
                 if(num[k]=='.')
                 {
@@ -20,7 +20,7 @@ int Conversion(char num[20], int t, int n)
 
         for(j=x-1; j>=0; j--)
         {
-                if(num[j]=='-') break; //·ûºÅµÄ´¦Àí
+                if(num[j]=='-') break; //ç¬¦å·çš„å¤„ç†
                 else if((num[j]>='A') && (num[j]<='F'))
                 {
                         r = num[j]-'A'+10;
@@ -34,7 +34,7 @@ int Conversion(char num[20], int t, int n)
                         perror("error:Conversion");
                         exit(1);
                 }
-                p=p+r*(pow ((double)t,(double)(x-j-1)));//¼ÆËã½á¹û
+                p=p+r*(pow ((double)t,(double)(x-j-1)));//è®¡ç®—ç»“æžœ
         }
 
         if(num[x]=='.')
@@ -58,7 +58,7 @@ int Conversion(char num[20], int t, int n)
                 }
         }
 
-        if(n==10)//Èç¹ûÒª×ª»»³ÉÊ®½øÖÆ
+        if(n==10)//å¦‚æžœè¦è½¬æ¢æˆåè¿›åˆ¶
         {
                 if(num[0]=='-')
                 {
@@ -67,26 +67,26 @@ int Conversion(char num[20], int t, int n)
                 strcpy(out, num);
                 return 0;
         }
-        else //Èç¹ûÒª×ª»»³ÉÆäËû½øÖÆ
+        else //å¦‚æžœè¦è½¬æ¢æˆå…¶ä»–è¿›åˆ¶
         {
                 k=(int)p;
                 i=0;
-                while(k)//ÅÐ¶¨ÐèÒª×ª»»µÄÊýÊÇ·ñ±äÎª0
+                while(k)//åˆ¤å®šéœ€è¦è½¬æ¢çš„æ•°æ˜¯å¦å˜ä¸º0
                 {
-                        h[i++]=k%n;//È¡Óà£¬½øÐÐ½øÖÆ×ª»»£¬µ«ÊÇË³ÐòÓëÕýÈ·ÖµÏà·´
-                        k/=n;//×ª»»Ò»Î»Ö®ºó½øÐÐÏàÓ¦µÄ±ä»¯
+                        h[i++]=k%n;//å–ä½™ï¼Œè¿›è¡Œè¿›åˆ¶è½¬æ¢ï¼Œä½†æ˜¯é¡ºåºä¸Žæ­£ç¡®å€¼ç›¸å
+                        k/=n;//è½¬æ¢ä¸€ä½ä¹‹åŽè¿›è¡Œç›¸åº”çš„å˜åŒ–
                 }
                 c=0;
-                if(p!=(int)p)//Ñ¡ÔñÐÔ¼ÆËã£¬Èç¹ûÊÇÕûÊý¾Í²»ÓÃ½øÐÐÕâÒ»²½µÄ¼ÆËãÁË
+                if(p!=(int)p)//é€‰æ‹©æ€§è®¡ç®—ï¼Œå¦‚æžœæ˜¯æ•´æ•°å°±ä¸ç”¨è¿›è¡Œè¿™ä¸€æ­¥çš„è®¡ç®—äº†
                 {
-                        d=p-(int)p;//È¡Ð¡Êý²¿·Ö
+                        d=p-(int)p;//å–å°æ•°éƒ¨åˆ†
                         while(d!=0)
                         {
-                                b[c]=(int)(d*n);//Ëã·¨Îª¡ÁNÈ¡Õû
+                                b[c]=(int)(d*n);//ç®—æ³•ä¸ºÃ—Nå–æ•´
                                 d=d*n-b[c];
                                 c++;
                                 if(c>=10)
-                                        break;//Ö÷ÒªÊÇ¿ØÖÆÐ¡ÊýºóÃæÍòÒ»³öÏÖÎÞÏÞÐ¡ÊýµÄÊ±ºòºÃÌø³öÑ­»·ÒÔÃâ³öÏÖËÀÑ­»·
+                                        break;//ä¸»è¦æ˜¯æŽ§åˆ¶å°æ•°åŽé¢ä¸‡ä¸€å‡ºçŽ°æ— é™å°æ•°çš„æ—¶å€™å¥½è·³å‡ºå¾ªçŽ¯ä»¥å…å‡ºçŽ°æ­»å¾ªçŽ¯
                         }
                 }
                 if(num[0]=='-')
@@ -94,7 +94,7 @@ int Conversion(char num[20], int t, int n)
                         out[0]='-';
                         ii++;
                 }
-                for(j=i-1; j>=0; j--,ii++) //·´ÐòÊä³ö,´óÓÚ10µÄÊý×Ö½øÐÐÏàÓ¦µÄ±ä»¯
+                for(j=i-1; j>=0; j--,ii++) //ååºè¾“å‡º,å¤§äºŽ10çš„æ•°å­—è¿›è¡Œç›¸åº”çš„å˜åŒ–
                 {
                         if((h[j]>=10) && (h[j]<=15))
                         {
@@ -109,10 +109,10 @@ int Conversion(char num[20], int t, int n)
                                 perror("error:Conversion");
                         }
                 }
-                if(p!=(int)p)//Ñ¡ÔñÐÔÊä³ö£¬ÕâÑù¿ÉÒÔ½ÚÔ¼Êä³öÊ±¼äºÍ³ÌÐòµÄÔËÐÐÊ±¼ä
+                if(p!=(int)p)//é€‰æ‹©æ€§è¾“å‡ºï¼Œè¿™æ ·å¯ä»¥èŠ‚çº¦è¾“å‡ºæ—¶é—´å’Œç¨‹åºçš„è¿è¡Œæ—¶é—´
                 {
                         out[ii++]='.';
-                        for(j=0; j<c; j++,ii++) //ÕýÐòÊä³ö
+                        for(j=0; j<c; j++,ii++) //æ­£åºè¾“å‡º
                         {
                                 if((h[j]>=10) && (h[j]<=15))
                                 {
@@ -132,172 +132,107 @@ int Conversion(char num[20], int t, int n)
         }
 }
 
+void show_all()
+{
+        gtk_widget_set_sensitive(button1, TRUE);
+        gtk_widget_set_sensitive(button2, TRUE);
+        gtk_widget_set_sensitive(button3, TRUE);
+        gtk_widget_set_sensitive(button4, TRUE);
+        gtk_widget_set_sensitive(button5, TRUE);
+        gtk_widget_set_sensitive(button6, TRUE);
+        gtk_widget_set_sensitive(button7, TRUE);
+        gtk_widget_set_sensitive(button8, TRUE);
+        gtk_widget_set_sensitive(button9, TRUE);
+        gtk_widget_set_sensitive(button10, TRUE);
+        gtk_widget_set_sensitive(button11, TRUE);
+        gtk_widget_set_sensitive(button12, TRUE);
+        gtk_widget_set_sensitive(button13, TRUE);
+        gtk_widget_set_sensitive(button14, TRUE);
+        gtk_widget_set_sensitive(button15, TRUE);
+        gtk_widget_set_sensitive(button16, TRUE);
+        gtk_widget_set_sensitive(button17, TRUE);
+        gtk_widget_set_sensitive(button18, TRUE);
+        gtk_widget_set_sensitive(button19, TRUE);
+        gtk_widget_set_sensitive(button20, TRUE);
+        gtk_widget_set_sensitive(button21, TRUE);
+        gtk_widget_set_sensitive(button22, TRUE);
+        gtk_widget_set_sensitive(button23, TRUE);
+        gtk_widget_set_sensitive(button24, TRUE);
+        gtk_widget_set_sensitive(button25, TRUE);
+        gtk_widget_set_sensitive(button26, TRUE);
+        gtk_widget_set_sensitive(button27, TRUE);
+        gtk_widget_set_sensitive(button28, TRUE);
+        gtk_widget_set_sensitive(button29, TRUE);
+        gtk_widget_set_sensitive(button30, TRUE);
+        gtk_widget_set_sensitive(button31, TRUE);
+        gtk_widget_set_sensitive(button32, TRUE);
+        gtk_widget_set_sensitive(button33, TRUE);
+        gtk_widget_set_sensitive(button34, TRUE);
+        gtk_widget_set_sensitive(button35, TRUE);
+        gtk_widget_set_sensitive(button36, TRUE);
+        gtk_widget_set_sensitive(button37, TRUE);
+        gtk_widget_set_sensitive(button38, TRUE);
+        gtk_widget_set_sensitive(button39, TRUE);
+        gtk_widget_set_sensitive(button40, TRUE);
+        gtk_widget_set_sensitive(button41, TRUE);
+        gtk_widget_set_sensitive(button42, TRUE);
+}
 void show_Bin_window()
 {
-        gtk_button_set_label(GTK_BUTTON(button1)," ");
-        gtk_widget_show(button1);
-        gtk_button_set_label(GTK_BUTTON(button2)," ");
-        gtk_widget_show(button2);
-        gtk_button_set_label(GTK_BUTTON(button3)," ");
-        gtk_widget_show(button3);
-        gtk_button_set_label(GTK_BUTTON(button4)," ");
-        gtk_widget_show(button4);
-        gtk_button_set_label(GTK_BUTTON(button6)," ");
-        gtk_widget_show(button6);
-        gtk_button_set_label(GTK_BUTTON(button14)," ");
-        gtk_widget_show(button14);
-        gtk_button_set_label(GTK_BUTTON(button15)," ");
-        gtk_widget_show(button15);
-        gtk_button_set_label(GTK_BUTTON(button18)," ");
-        gtk_widget_show(button18);
-        gtk_button_set_label(GTK_BUTTON(button19)," ");
-        gtk_widget_show(button19);
-        gtk_button_set_label(GTK_BUTTON(button20)," ");
-        gtk_widget_show(button20);
-        gtk_button_set_label(GTK_BUTTON(button21)," ");
-        gtk_widget_show(button21);
-        gtk_button_set_label(GTK_BUTTON(button23)," ");
-        gtk_widget_show(button23);
-        gtk_button_set_label(GTK_BUTTON(button24)," ");
-        gtk_widget_show(button24);
-        gtk_button_set_label(GTK_BUTTON(button25)," ");
-        gtk_widget_show(button25);
-        gtk_button_set_label(GTK_BUTTON(button26)," ");
-        gtk_widget_show(button26);
-        gtk_button_set_label(GTK_BUTTON(button28)," ");
-        gtk_widget_show(button28);
-        gtk_button_set_label(GTK_BUTTON(button33)," ");
-        gtk_widget_show(button33);
-        gtk_button_set_label(GTK_BUTTON(button38)," ");
-        gtk_widget_show(button38);
-        gtk_button_set_label(GTK_BUTTON(button42)," ");
-        gtk_widget_show(button42);
+        show_all();
+        gtk_widget_set_sensitive(button1, FALSE);
+        gtk_widget_set_sensitive(button2, FALSE);
+        gtk_widget_set_sensitive(button3, FALSE);
+        gtk_widget_set_sensitive(button4, FALSE);
+        gtk_widget_set_sensitive(button14, FALSE);
+        gtk_widget_set_sensitive(button15, FALSE);
+        gtk_widget_set_sensitive(button18, FALSE);
+        gtk_widget_set_sensitive(button19, FALSE);
+        gtk_widget_set_sensitive(button20, FALSE);
+        gtk_widget_set_sensitive(button21, FALSE);
+        gtk_widget_set_sensitive(button23, FALSE);
+        gtk_widget_set_sensitive(button24, FALSE);
+        gtk_widget_set_sensitive(button25, FALSE);
+        gtk_widget_set_sensitive(button26, FALSE);
+        gtk_widget_set_sensitive(button28, FALSE);
+        gtk_widget_set_sensitive(button33, FALSE);
+        gtk_widget_set_sensitive(button38, FALSE);
+        gtk_widget_set_sensitive(button42, FALSE);
 }
-
 
 void show_Dec_window()
 {
-        gtk_button_set_label(GTK_BUTTON(button1),"pi");
-        gtk_widget_show(button1);
-        gtk_button_set_label(GTK_BUTTON(button2),"sin");
-        gtk_widget_show(button2);
-        gtk_button_set_label(GTK_BUTTON(button3),"cos");
-        gtk_widget_show(button3);
-        gtk_button_set_label(GTK_BUTTON(button4),"tan");
-        gtk_widget_show(button4);
-        gtk_button_set_label(GTK_BUTTON(button6),"Exp");
-        gtk_widget_show(button6);
-        gtk_button_set_label(GTK_BUTTON(button14),"7");
-        gtk_widget_show(button14);
-        gtk_button_set_label(GTK_BUTTON(button15),"4");
-        gtk_widget_show(button15);
-        gtk_button_set_label(GTK_BUTTON(button18)," ");
-        gtk_widget_show(button18);
-        gtk_button_set_label(GTK_BUTTON(button19),"8");
-        gtk_widget_show(button19);
-        gtk_button_set_label(GTK_BUTTON(button20),"5");
-        gtk_widget_show(button20);
-        gtk_button_set_label(GTK_BUTTON(button21),"2");
-        gtk_widget_show(button21);
-        gtk_button_set_label(GTK_BUTTON(button23)," ");
-        gtk_widget_show(button23);
-        gtk_button_set_label(GTK_BUTTON(button24),"9");
-        gtk_widget_show(button24);
-        gtk_button_set_label(GTK_BUTTON(button25),"6");
-        gtk_widget_show(button25);
-        gtk_button_set_label(GTK_BUTTON(button26),"3");
-        gtk_widget_show(button26);
-        gtk_button_set_label(GTK_BUTTON(button28)," ");
-        gtk_widget_show(button28);
-        gtk_button_set_label(GTK_BUTTON(button33)," ");
-        gtk_widget_show(button33);
-        gtk_button_set_label(GTK_BUTTON(button38)," ");
-        gtk_widget_show(button38);
-        gtk_button_set_label(GTK_BUTTON(button42)," ");
-        gtk_widget_show(button42);
+        show_all();
+        gtk_widget_set_sensitive(button18, FALSE);
+        gtk_widget_set_sensitive(button23, FALSE);
+        gtk_widget_set_sensitive(button28, FALSE);
+        gtk_widget_set_sensitive(button33, FALSE);
+        gtk_widget_set_sensitive(button38, FALSE);
+        gtk_widget_set_sensitive(button42, FALSE);
 }
 
 void show_Hex_window()
 {
-        gtk_button_set_label(GTK_BUTTON(button1)," ");
-        gtk_widget_show(button1);
-        gtk_button_set_label(GTK_BUTTON(button2)," ");
-        gtk_widget_show(button2);
-        gtk_button_set_label(GTK_BUTTON(button3)," ");
-        gtk_widget_show(button3);
-        gtk_button_set_label(GTK_BUTTON(button4)," ");
-        gtk_widget_show(button4);
-        gtk_button_set_label(GTK_BUTTON(button6)," ");
-        gtk_widget_show(button6);
-        gtk_button_set_label(GTK_BUTTON(button14),"7");
-        gtk_widget_show(button14);
-        gtk_button_set_label(GTK_BUTTON(button15),"4");
-        gtk_widget_show(button15);
-        gtk_button_set_label(GTK_BUTTON(button18),"A");
-        gtk_widget_show(button18);
-        gtk_button_set_label(GTK_BUTTON(button19),"8");
-        gtk_widget_show(button19);
-        gtk_button_set_label(GTK_BUTTON(button20),"5");
-        gtk_widget_show(button20);
-        gtk_button_set_label(GTK_BUTTON(button21),"2");
-        gtk_widget_show(button21);
-        gtk_button_set_label(GTK_BUTTON(button23),"B");
-        gtk_widget_show(button23);
-        gtk_button_set_label(GTK_BUTTON(button24),"9");
-        gtk_widget_show(button24);
-        gtk_button_set_label(GTK_BUTTON(button25),"6");
-        gtk_widget_show(button25);
-        gtk_button_set_label(GTK_BUTTON(button26),"3");
-        gtk_widget_show(button26);
-        gtk_button_set_label(GTK_BUTTON(button28),"C");
-        gtk_widget_show(button28);
-        gtk_button_set_label(GTK_BUTTON(button33),"D");
-        gtk_widget_show(button33);
-        gtk_button_set_label(GTK_BUTTON(button38),"E");
-        gtk_widget_show(button38);
-        gtk_button_set_label(GTK_BUTTON(button42),"F");
-        gtk_widget_show(button42);
+        show_all();
+        gtk_widget_set_sensitive(button1, FALSE);
+        gtk_widget_set_sensitive(button2, FALSE);
+        gtk_widget_set_sensitive(button3, FALSE);
+        gtk_widget_set_sensitive(button4, FALSE);
 }
 
 void show_Oct_window()
 {
-        gtk_button_set_label(GTK_BUTTON(button1)," ");
-        gtk_widget_show(button1);
-        gtk_button_set_label(GTK_BUTTON(button2)," ");
-        gtk_widget_show(button2);
-        gtk_button_set_label(GTK_BUTTON(button3)," ");
-        gtk_widget_show(button3);
-        gtk_button_set_label(GTK_BUTTON(button4)," ");
-        gtk_widget_show(button4);
-        gtk_button_set_label(GTK_BUTTON(button6)," ");
-        gtk_widget_show(button6);
-        gtk_button_set_label(GTK_BUTTON(button14),"7");
-        gtk_widget_show(button14);
-        gtk_button_set_label(GTK_BUTTON(button15),"4");
-        gtk_widget_show(button15);
-        gtk_button_set_label(GTK_BUTTON(button18)," ");
-        gtk_widget_show(button18);
-        gtk_button_set_label(GTK_BUTTON(button19)," ");
-        gtk_widget_show(button19);
-        gtk_button_set_label(GTK_BUTTON(button20),"5");
-        gtk_widget_show(button20);
-        gtk_button_set_label(GTK_BUTTON(button21),"2");
-        gtk_widget_show(button21);
-        gtk_button_set_label(GTK_BUTTON(button23)," ");
-        gtk_widget_show(button23);
-        gtk_button_set_label(GTK_BUTTON(button24)," ");
-        gtk_widget_show(button24);
-        gtk_button_set_label(GTK_BUTTON(button25),"6");
-        gtk_widget_show(button25);
-        gtk_button_set_label(GTK_BUTTON(button26),"3");
-        gtk_widget_show(button26);
-        gtk_button_set_label(GTK_BUTTON(button28)," ");
-        gtk_widget_show(button28);
-        gtk_button_set_label(GTK_BUTTON(button33)," ");
-        gtk_widget_show(button33);
-        gtk_button_set_label(GTK_BUTTON(button38)," ");
-        gtk_widget_show(button38);
-        gtk_button_set_label(GTK_BUTTON(button42)," ");
-        gtk_widget_show(button42);
+        show_all();
+        gtk_widget_set_sensitive(button1, FALSE);
+        gtk_widget_set_sensitive(button2, FALSE);
+        gtk_widget_set_sensitive(button3, FALSE);
+        gtk_widget_set_sensitive(button4, FALSE);
+        gtk_widget_set_sensitive(button18, FALSE);
+        gtk_widget_set_sensitive(button19, FALSE);
+        gtk_widget_set_sensitive(button23, FALSE);
+        gtk_widget_set_sensitive(button24, FALSE);
+        gtk_widget_set_sensitive(button28, FALSE);
+        gtk_widget_set_sensitive(button33, FALSE);
+        gtk_widget_set_sensitive(button38, FALSE);
+        gtk_widget_set_sensitive(button42, FALSE);
 }
-

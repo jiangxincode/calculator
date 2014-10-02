@@ -25,6 +25,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 * Version 0.03 去除g_locale_to_utf8函数，用g_convert进行替换。
 * Version 0.04 进一步精简了代码。
 * Version 0.05 增加了图片展示。
+* Version 0.06 暂时将中文替代为英文，之后会再次修复，解决了button显示问题。
+
 
 将要修复等问题：
 按钮颜色控制

@@ -8,21 +8,21 @@
 #ifndef CALCULATOR_H
 #define CALCULATOR_H
 
-double a,b;          /*¶¨ÒåÁ½¸ö²ÎÓëÔËËãµÄ±äÁ¿£¬Ë«¾«¶ÈĞÍ*/
+double a,b;          /*å®šä¹‰ä¸¤ä¸ªå‚ä¸è¿ç®—çš„å˜é‡ï¼ŒåŒç²¾åº¦å‹*/
 double p;
-int hasdot;          /*ÊÇ·ñÓĞĞ¡Êıµã*/
-int method;          /*ÓÃÓÚÇø±ğ²»Í¬µÄÔËËã*/
-int principle;       /*±êÊ¶²»Í¬µÄ½øÖÆ*/
-char out[20]; /*Êä³ö½á¹û*/
+int hasdot;          /*æ˜¯å¦æœ‰å°æ•°ç‚¹*/
+int method;          /*ç”¨äºåŒºåˆ«ä¸åŒçš„è¿ç®—*/
+int principle;       /*æ ‡è¯†ä¸åŒçš„è¿›åˆ¶*/
+char out[20]; /*è¾“å‡ºç»“æœ*/
 
-GtkWidget *window;   /*ÕâÒ»²¿·ÖÊÇ¶¨ÒåÔª¼ş*/
-GtkWidget *vbox;     /*´¹Ö±¿ò*/
-GtkWidget *table1;   /*±í¸ñ1*/
-GtkWidget *table2;   /*±í¸ñ2*/
+GtkWidget *window;   /*è¿™ä¸€éƒ¨åˆ†æ˜¯å®šä¹‰å…ƒä»¶*/
+GtkWidget *vbox;     /*å‚ç›´æ¡†*/
+GtkWidget *table1;   /*è¡¨æ ¼1*/
+GtkWidget *table2;   /*è¡¨æ ¼2*/
 GSList *group;
-GtkWidget *radio;    /*µ¥Ñ¡°´Å¥*/
-GtkWidget *entry;    /*ÎÄ±¾¿ò*/
-GtkWidget *button1;  /*42¸ö°´Å¥*/
+GtkWidget *radio;    /*å•é€‰æŒ‰é’®*/
+GtkWidget *entry;    /*æ–‡æœ¬æ¡†*/
+GtkWidget *button1;  /*42ä¸ªæŒ‰é’®*/
 GtkWidget *button2;
 GtkWidget *button3;
 GtkWidget *button4;
@@ -65,6 +65,7 @@ GtkWidget *button40;
 GtkWidget *button41;
 GtkWidget *button42;
 
+void show_all();
 void show_Bin_window();
 void show_Dec_window();
 void show_Hex_window();
@@ -73,11 +74,14 @@ void show_Oct_window();
 int Conversion(char num[20], int t, int n);
 
 void error_handle(const char* info);
-void on_clicked(GtkWidget *widget, gpointer data);
+void addsignal();
+
 void Binary_Operator();
 void Right_output();
 float fun(int c) ;
 void output();
+
+void on_clicked(GtkWidget *widget, gpointer data);
 void Add(GtkWidget *widget, gpointer data);
 void Sub(GtkWidget *widget,gpointer data);
 void Mul(GtkWidget *widget,gpointer data);
@@ -100,9 +104,9 @@ void Inverse(GtkWidget *widget,gpointer data);
 void Not(GtkWidget *widget,gpointer data);
 void Floor(GtkWidget *widget,gpointer data);
 void dot(GtkWidget *widget,gpointer data);
-void Sign();
+void Sign(GtkWidget *widget,gpointer data);
 void clear(GtkWidget *widget,gpointer data);
 void input (GtkWidget *widget, gpointer data);
 void input_pi (GtkWidget *widget, gpointer data);
-void addsignal();
+
 #endif // CALCULATOR_H

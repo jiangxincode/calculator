@@ -356,7 +356,7 @@ void dot(GtkWidget *widget,gpointer data)
         }
 }
 
-void Sign()
+void Sign(GtkWidget *widget,gpointer data)
 {
         char num[20];
         float c;
@@ -446,6 +446,3 @@ void addsignal()
         g_signal_connect (G_OBJECT(button5), "clicked", G_CALLBACK(output),NULL);
         g_signal_connect (G_OBJECT(window),"delete_event" ,gtk_main_quit, NULL);
 }
-
-
-
