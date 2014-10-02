@@ -23,7 +23,9 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 * Version 0.01 完成基本架构。
 * Version 0.02 优化了部分函数，提高了效率和可读性。
 * Version 0.03 去除g_locale_to_utf8函数，用g_convert进行替换。
+* Version 0.04 进一步精简了代码。
 
 将要修复等问题：
 按钮颜色控制
 最大化等变形问题
+GTK版本控制问题。

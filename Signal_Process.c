@@ -74,9 +74,17 @@ float fun(int c)   /*递归函数求阶乘*/
         return d;
 }
 
+void error_handle(const char* info)
+{
+        a=0;
+        b=0;
+        method=0;
+        gtk_entry_set_text (GTK_ENTRY(entry),g_convert(info,-1,"UTF-8","GB2312",NULL,NULL,NULL)); /*显示出错信息*/
+}
+
 void output() /*双目运算结果输出*/
 {
-        char num[20]="0";
+        char num[20];
         strcpy(num, gtk_entry_get_text(GTK_ENTRY(entry)));   /* 取得文本框输入的内容*/
         Conversion(num, principle, 10); /*将输入的进制数转换为十进制*/
         b = p;
@@ -97,10 +105,7 @@ void output() /*双目运算结果输出*/
         case 3:
                 if(b==0)
                 {
-                        a=0;
-                        b=0;
-                        method=0;
-                        gtk_entry_set_text (GTK_ENTRY(entry),g_convert("除数不能为零",-1,"UTF-8","GB2312",NULL,NULL,NULL)); /*显示出错信息*/
+                        error_handle("除数不能为零");
                 }
                 else
                 {
@@ -127,10 +132,7 @@ void output() /*双目运算结果输出*/
         case 8:
                 if(b==0)
                 {
-                        a=0;
-                        b=0;
-                        method=0;
-                        gtk_entry_set_text (GTK_ENTRY(entry), g_convert("除数不能为零",-1,"UTF-8","GB2312",NULL,NULL,NULL)); /*显示出错信息*/
+                        error_handle("除数不能为零");
                 }
                 else
                 {
@@ -165,10 +167,7 @@ void output() /*双目运算结果输出*/
         case 15:
                 if(b<=0)
                 {
-                        a=0;
-                        b=0;
-                        method=0;
-                        gtk_entry_set_text (GTK_ENTRY(entry), g_convert("对数必须为正数",-1,"UTF-8","GB2312",NULL,NULL,NULL)); /*显示出错信息*/
+                        error_handle("对数必须为正数");
                 }
                 else
                 {
@@ -179,10 +178,7 @@ void output() /*双目运算结果输出*/
         case 16:
                 if(b<=0)
                 {
-                        a=0;
-                        b=0;
-                        method=0;
-                        gtk_entry_set_text (GTK_ENTRY(entry), g_convert("对数必须为正数",-1,"UTF-8","GB2312",NULL,NULL,NULL)); /*显示出错信息*/
+                        error_handle("对数必须为正数");
                 }
                 else
                 {
@@ -193,11 +189,7 @@ void output() /*双目运算结果输出*/
         case 17:
                 if(b<0)
                 {
-                        a=0;
-                        b=0;
-                        method=0;
-                        gtk_entry_set_text (GTK_ENTRY(entry), g_convert("函数输入无效",-1,"UTF-8","GB2312",NULL,NULL,NULL)); /*显示出错信息*/
-
+                        error_handle("函数输入无效");
                 }
                 else
                 {
@@ -208,10 +200,7 @@ void output() /*双目运算结果输出*/
         case 18:
                 if(b==0)
                 {
-                        a=0;
-                        b=0;
-                        method=0;
-                        gtk_entry_set_text (GTK_ENTRY(entry), g_convert("除数不能为零",-1,"UTF-8","GB2312",NULL,NULL,NULL)); /*显示出错信息*/
+                        error_handle("除数不能为零");
                 }
                 else
                 {
@@ -420,10 +409,13 @@ void addsignal()
         g_signal_connect (G_OBJECT(button33), "clicked", G_CALLBACK(input), NULL); /*D*/
         g_signal_connect (G_OBJECT(button38), "clicked", G_CALLBACK(input), NULL); /*E*/
         g_signal_connect (G_OBJECT(button42), "clicked", G_CALLBACK(input), NULL); /*F*/
+
         /*下面的按钮实现小数点的输入*/
         g_signal_connect (G_OBJECT(button27), "clicked", G_CALLBACK(dot), NULL);
+
         /*下面的按钮实现正负号的输入*/
         g_signal_connect (G_OBJECT(button22), "clicked", G_CALLBACK(Sign), NULL);
+
         /*下面的按钮实现各种运算的输入*/
         g_signal_connect (G_OBJECT(button2), "clicked", G_CALLBACK(Sin), NULL);
         g_signal_connect (G_OBJECT(button3), "clicked", G_CALLBACK(Cos), NULL);
@@ -446,8 +438,10 @@ void addsignal()
         g_signal_connect (G_OBJECT(button39), "clicked", G_CALLBACK(Not), NULL);
         g_signal_connect (G_OBJECT(button40), "clicked", G_CALLBACK(Xor), NULL);
         g_signal_connect (G_OBJECT(button41), "clicked", G_CALLBACK(Floor), NULL);
+
         /* 下面的按钮实现复位功能*/
         g_signal_connect (G_OBJECT(button34), "clicked", G_CALLBACK(clear),NULL);
+
         /* 下面的按钮实现结果输出*/
         g_signal_connect (G_OBJECT(button5), "clicked", G_CALLBACK(output),NULL);
         g_signal_connect (G_OBJECT(window),"delete_event" ,gtk_main_quit, NULL);

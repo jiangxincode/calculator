@@ -72,7 +72,7 @@ void show_Oct_window();
 
 int Conversion(char num[20], int t, int n);
 
-
+void error_handle(const char* info);
 void on_clicked(GtkWidget *widget, gpointer data);
 void Binary_Operator();
 void Right_output();
