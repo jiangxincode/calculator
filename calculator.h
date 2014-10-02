@@ -81,6 +81,8 @@ void Right_output();
 float fun(int c) ;
 void output();
 
+GdkPixbuf *create_pixbuf(const gchar *filename);
+
 void on_clicked(GtkWidget *widget, gpointer data);
 void Add(GtkWidget *widget, gpointer data);
 void Sub(GtkWidget *widget,gpointer data);

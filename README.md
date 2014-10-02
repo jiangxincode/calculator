@@ -27,6 +27,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 * Version 0.05 增加了图片展示。
 * Version 0.06 暂时将中文替代为英文，之后会再次修复，解决了button显示问题。
 * Version 0.07 解决了最大化变形问题，同时精简了代码。
+* Version 0.08 设置了程序图标。
 
 
 将要修复等问题：

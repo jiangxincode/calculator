@@ -1,5 +1,18 @@
 #include "calculator.h"
 
+GdkPixbuf *create_pixbuf(const gchar *filename)
+{
+        GdkPixbuf *pixbuf;
+        GError *error = NULL;
+        pixbuf = gdk_pixbuf_new_from_file(filename, &error);
+        if(!pixbuf)
+        {
+                fprintf(stderr, "%s\n", error->message);
+                g_error_free(error);
+        }
+        return pixbuf;
+}
+
 void on_clicked(GtkWidget *widget, gpointer data)
 {
 
@@ -34,39 +47,39 @@ void on_clicked(GtkWidget *widget, gpointer data)
 }
 
 
-void Binary_Operator()          /*Ë«Ä¿ÔËËã*/
+void Binary_Operator()          /*åŒç›®è¿ç®—*/
 {
         char num[20];
-        strcpy(num, gtk_entry_get_text(GTK_ENTRY(entry)));/*È¡µÃÎÄ±¾¿òµÄÄÚÈİ*/
-        if(a==0)                      /*Èç¹ûÃ»ÓĞµÚÒ»¸öÊı£¬Ôò´æ´¢ÎªµÚÒ»¸öÊı*/
+        strcpy(num, gtk_entry_get_text(GTK_ENTRY(entry)));/*å–å¾—æ–‡æœ¬æ¡†çš„å†…å®¹*/
+        if(a==0)                      /*å¦‚æœæ²¡æœ‰ç¬¬ä¸€ä¸ªæ•°ï¼Œåˆ™å­˜å‚¨ä¸ºç¬¬ä¸€ä¸ªæ•°*/
         {
-                Conversion(num,principle,10); //È«²¿×ªÎªÊ®½øÖÆ
+                Conversion(num,principle,10); //å…¨éƒ¨è½¬ä¸ºåè¿›åˆ¶
                 a = p;
-                gtk_entry_set_text(GTK_ENTRY(entry),"");  /*Çå¿ÕÎÄ±¾¿ò*/
+                gtk_entry_set_text(GTK_ENTRY(entry),"");  /*æ¸…ç©ºæ–‡æœ¬æ¡†*/
         }
-        else        /*Èç¹ûÒÑÓĞµÚÒ»¸öÊı£¬ÔòÓ¦´æ´¢ÎªµÚ¶ş¸öÊı*/
+        else        /*å¦‚æœå·²æœ‰ç¬¬ä¸€ä¸ªæ•°ï¼Œåˆ™åº”å­˜å‚¨ä¸ºç¬¬äºŒä¸ªæ•°*/
         {
-                Conversion(num,principle,10); //È«²¿×ªÎªÊ®½øÖÆ
+                Conversion(num,principle,10); //å…¨éƒ¨è½¬ä¸ºåè¿›åˆ¶
                 b = p;
         }
-        hasdot=0;   /*±íÊ¾ÒÑ¾­Ã»ÓĞĞ¡Êıµã*/
+        hasdot=0;   /*è¡¨ç¤ºå·²ç»æ²¡æœ‰å°æ•°ç‚¹*/
 }
 
-void Right_output() /*µ¥Ä¿ÔËËã½á¹ûÊä³ö*/
+void Right_output() /*å•ç›®è¿ç®—ç»“æœè¾“å‡º*/
 {
         char num[20];
-        if(gcvt(a,32,num) == NULL)   /*ÔËËã½á¹û×ª»»³É×Ö·û´®*/
+        if(gcvt(a,32,num) == NULL)   /*è¿ç®—ç»“æœè½¬æ¢æˆå­—ç¬¦ä¸²*/
         {
                 perror("error:Right_output");
         }
-        Conversion(num, 10, principle); /*½«ÔËËã½á¹û£¨Ê®½øÖÆ×Ö·û´®£©×ª»»³ÉÖ¸¶¨½øÖÆÊı*/
-        gtk_entry_set_text(GTK_ENTRY(entry),out);     /*ÏÔÊ¾½á¹û*/
+        Conversion(num, 10, principle); /*å°†è¿ç®—ç»“æœï¼ˆåè¿›åˆ¶å­—ç¬¦ä¸²ï¼‰è½¬æ¢æˆæŒ‡å®šè¿›åˆ¶æ•°*/
+        gtk_entry_set_text(GTK_ENTRY(entry),out);     /*æ˜¾ç¤ºç»“æœ*/
         a=0;
         b=0;
         method=0;
 }
 
-float fun(int c)   /*µİ¹éº¯ÊıÇó½×³Ë*/
+float fun(int c)   /*é€’å½’å‡½æ•°æ±‚é˜¶ä¹˜*/
 {
         float d;
         if(c==0 || c==1) d=1;
@@ -79,14 +92,14 @@ void error_handle(const char* info)
         a=0;
         b=0;
         method=0;
-        gtk_entry_set_text (GTK_ENTRY(entry),g_convert(info,-1,"UTF-8","GB2312",NULL,NULL,NULL)); /*ÏÔÊ¾³ö´íĞÅÏ¢*/
+        gtk_entry_set_text (GTK_ENTRY(entry),g_convert(info,-1,"UTF-8","GB2312",NULL,NULL,NULL)); /*æ˜¾ç¤ºå‡ºé”™ä¿¡æ¯*/
 }
 
-void output() /*Ë«Ä¿ÔËËã½á¹ûÊä³ö*/
+void output() /*åŒç›®è¿ç®—ç»“æœè¾“å‡º*/
 {
         char num[20];
-        strcpy(num, gtk_entry_get_text(GTK_ENTRY(entry)));   /* È¡µÃÎÄ±¾¿òÊäÈëµÄÄÚÈİ*/
-        Conversion(num, principle, 10); /*½«ÊäÈëµÄ½øÖÆÊı×ª»»ÎªÊ®½øÖÆ*/
+        strcpy(num, gtk_entry_get_text(GTK_ENTRY(entry)));   /* å–å¾—æ–‡æœ¬æ¡†è¾“å…¥çš„å†…å®¹*/
+        Conversion(num, principle, 10); /*å°†è¾“å…¥çš„è¿›åˆ¶æ•°è½¬æ¢ä¸ºåè¿›åˆ¶*/
         b = p;
         switch(method)
         {
@@ -105,7 +118,7 @@ void output() /*Ë«Ä¿ÔËËã½á¹ûÊä³ö*/
         case 3:
                 if(b==0)
                 {
-                        error_handle("³ıÊı²»ÄÜÎªÁã");
+                        error_handle("é™¤æ•°ä¸èƒ½ä¸ºé›¶");
                 }
                 else
                 {
@@ -132,7 +145,7 @@ void output() /*Ë«Ä¿ÔËËã½á¹ûÊä³ö*/
         case 8:
                 if(b==0)
                 {
-                        error_handle("³ıÊı²»ÄÜÎªÁã");
+                        error_handle("é™¤æ•°ä¸èƒ½ä¸ºé›¶");
                 }
                 else
                 {
@@ -167,7 +180,7 @@ void output() /*Ë«Ä¿ÔËËã½á¹ûÊä³ö*/
         case 15:
                 if(b<=0)
                 {
-                        error_handle("¶ÔÊı±ØĞëÎªÕıÊı");
+                        error_handle("å¯¹æ•°å¿…é¡»ä¸ºæ­£æ•°");
                 }
                 else
                 {
@@ -178,7 +191,7 @@ void output() /*Ë«Ä¿ÔËËã½á¹ûÊä³ö*/
         case 16:
                 if(b<=0)
                 {
-                        error_handle("¶ÔÊı±ØĞëÎªÕıÊı");
+                        error_handle("å¯¹æ•°å¿…é¡»ä¸ºæ­£æ•°");
                 }
                 else
                 {
@@ -189,7 +202,7 @@ void output() /*Ë«Ä¿ÔËËã½á¹ûÊä³ö*/
         case 17:
                 if(b<0)
                 {
-                        error_handle("º¯ÊıÊäÈëÎŞĞ§");
+                        error_handle("å‡½æ•°è¾“å…¥æ— æ•ˆ");
                 }
                 else
                 {
@@ -200,7 +213,7 @@ void output() /*Ë«Ä¿ÔËËã½á¹ûÊä³ö*/
         case 18:
                 if(b==0)
                 {
-                        error_handle("³ıÊı²»ÄÜÎªÁã");
+                        error_handle("é™¤æ•°ä¸èƒ½ä¸ºé›¶");
                 }
                 else
                 {
@@ -221,127 +234,127 @@ void output() /*Ë«Ä¿ÔËËã½á¹ûÊä³ö*/
         }
 }
 
-void Add(GtkWidget *widget, gpointer data)    /*¼Ó·¨ÔËËã*/
+void Add(GtkWidget *widget, gpointer data)    /*åŠ æ³•è¿ç®—*/
 {
         method=0;
         Binary_Operator();
 }
 
-void Sub(GtkWidget *widget,gpointer data)     /*¼õ·¨ÔËËã*/
+void Sub(GtkWidget *widget,gpointer data)     /*å‡æ³•è¿ç®—*/
 {
         method=1;
         Binary_Operator();
 }
 
-void Mul(GtkWidget *widget,gpointer data)     /*³Ë·¨ÔËËã*/
+void Mul(GtkWidget *widget,gpointer data)     /*ä¹˜æ³•è¿ç®—*/
 {
         method=2;
         Binary_Operator();
 }
 
-void Division(GtkWidget *widget,gpointer data)   /*³ı·¨ÔËËã*/
+void Division(GtkWidget *widget,gpointer data)   /*é™¤æ³•è¿ç®—*/
 {
         method=3;
         Binary_Operator();
 }
 
-void Mathpowxy(GtkWidget *widget,gpointer data)  /*ÃİÔËËã*/
+void Mathpowxy(GtkWidget *widget,gpointer data)  /*å¹‚è¿ç®—*/
 {
         method=4;
         Binary_Operator();
 }
 
-void And(GtkWidget *widget,gpointer data)   /*Âß¼­Óë*/
+void And(GtkWidget *widget,gpointer data)   /*é€»è¾‘ä¸*/
 {
         method=5;
         Binary_Operator();
 }
 
-void Or(GtkWidget *widget,gpointer data)    /*Âß¼­»ò*/
+void Or(GtkWidget *widget,gpointer data)    /*é€»è¾‘æˆ–*/
 {
         method=6;
         Binary_Operator();
 }
 
-void Xor(GtkWidget *widget,gpointer data)    /*Âß¼­Òì»ò*/
+void Xor(GtkWidget *widget,gpointer data)    /*é€»è¾‘å¼‚æˆ–*/
 {
         method=7;
         Binary_Operator();
 }
 
-void Mod(GtkWidget *widget,gpointer data)    /*Ä£ÔËËã(È¡Óà)*/
+void Mod(GtkWidget *widget,gpointer data)    /*æ¨¡è¿ç®—(å–ä½™)*/
 {
         method=8;
         Binary_Operator();
 }
 
-void Sin(GtkWidget *widget,gpointer data)    /*ÇóÕıÏÒ£¨°´»¡¶ÈÖµ£©*/
+void Sin(GtkWidget *widget,gpointer data)    /*æ±‚æ­£å¼¦ï¼ˆæŒ‰å¼§åº¦å€¼ï¼‰*/
 {
         method=9;
         output();
 }
 
-void Cos(GtkWidget *widget,gpointer data)    /*ÇóÓàÏÒ£¨°´»¡¶ÈÖµ£©*/
+void Cos(GtkWidget *widget,gpointer data)    /*æ±‚ä½™å¼¦ï¼ˆæŒ‰å¼§åº¦å€¼ï¼‰*/
 {
         method=10;
         output();
 }
 
-void Tan(GtkWidget *widget,gpointer data)    /*ÇóÕıÇĞ£¨°´»¡¶ÈÖµ£©*/
+void Tan(GtkWidget *widget,gpointer data)    /*æ±‚æ­£åˆ‡ï¼ˆæŒ‰å¼§åº¦å€¼ï¼‰*/
 {
         method=11;
         output();
 }
 
-void Exp(GtkWidget *widget,gpointer data)    /*Ö¸ÊıÔËËã*/
+void Exp(GtkWidget *widget,gpointer data)    /*æŒ‡æ•°è¿ç®—*/
 {
         method=12;
         output();
 }
 
-void Cube(GtkWidget *widget,gpointer data)    /*Á¢·½*/
+void Cube(GtkWidget *widget,gpointer data)    /*ç«‹æ–¹*/
 {
         method=13;
         output();
 }
 
-void Square(GtkWidget *widget,gpointer data)    /*Æ½·½*/
+void Square(GtkWidget *widget,gpointer data)    /*å¹³æ–¹*/
 {
         method=14;
         output();
 }
 
-void Log_e(GtkWidget *widget,gpointer data)    /*µ×ÊıÎªeÇó¶ÔÊı*/
+void Log_e(GtkWidget *widget,gpointer data)    /*åº•æ•°ä¸ºeæ±‚å¯¹æ•°*/
 {
         method=15;
         output();
 }
 
-void Log_10(GtkWidget *widget,gpointer data)    /*µ×ÊıÎª10Çó¶ÔÊı*/
+void Log_10(GtkWidget *widget,gpointer data)    /*åº•æ•°ä¸º10æ±‚å¯¹æ•°*/
 {
         method=16;
         output();
 }
 
-void Factorial(GtkWidget *widget,gpointer data)    /*½×³Ë*/
+void Factorial(GtkWidget *widget,gpointer data)    /*é˜¶ä¹˜*/
 {
         method=17;
         output();
 }
 
-void Inverse(GtkWidget *widget,gpointer data)    /*Çóµ¹Êı*/
+void Inverse(GtkWidget *widget,gpointer data)    /*æ±‚å€’æ•°*/
 {
         method=18;
         output();
 }
 
-void Not(GtkWidget *widget,gpointer data)    /*Âß¼­·Ç*/
+void Not(GtkWidget *widget,gpointer data)    /*é€»è¾‘é*/
 {
         method=19;
         output();
 }
 
-void Floor(GtkWidget *widget,gpointer data)    /*È¡Õû*/
+void Floor(GtkWidget *widget,gpointer data)    /*å–æ•´*/
 {
         method=20;
         output();
@@ -349,10 +362,10 @@ void Floor(GtkWidget *widget,gpointer data)    /*È¡Õû*/
 
 void dot(GtkWidget *widget,gpointer data)
 {
-        if(hasdot==0) /* Ã»ÓĞĞ¡ÊıµãÔòÌí¼ÓÒ»¸öĞ¡Êıµã¡£*/
+        if(hasdot==0) /* æ²¡æœ‰å°æ•°ç‚¹åˆ™æ·»åŠ ä¸€ä¸ªå°æ•°ç‚¹ã€‚*/
         {
                 gtk_entry_append_text (GTK_ENTRY(entry), gtk_button_get_label(GTK_BUTTON(widget)));
-                hasdot=1;/*  ±íÊ¾ÓĞÒ»¸öĞ¡Êıµã¡£*/
+                hasdot=1;/*  è¡¨ç¤ºæœ‰ä¸€ä¸ªå°æ•°ç‚¹ã€‚*/
         }
 }
 
@@ -360,14 +373,14 @@ void Sign(GtkWidget *widget,gpointer data)
 {
         char num[20];
         float c;
-        strcpy(num, gtk_entry_get_text(GTK_ENTRY(entry)));/*È¡µÃÎÄ±¾¿òµÄÄÚÈİ¡£*/
-        c=atof(num);             /*×ª»»³É¸¡µãĞÍ*/
+        strcpy(num, gtk_entry_get_text(GTK_ENTRY(entry)));/*å–å¾—æ–‡æœ¬æ¡†çš„å†…å®¹ã€‚*/
+        c=atof(num);             /*è½¬æ¢æˆæµ®ç‚¹å‹*/
         c=-c;
-        if(gcvt(c,32,num) == NULL)  /*½á¹û×ª»»³É×Ö·û´®*/
+        if(gcvt(c,32,num) == NULL)  /*ç»“æœè½¬æ¢æˆå­—ç¬¦ä¸²*/
         {
                 perror("error:Sign");
         }
-        gtk_entry_set_text(GTK_ENTRY(entry),num);    /*ÏÔÊ¾½á¹û*/
+        gtk_entry_set_text(GTK_ENTRY(entry),num);    /*æ˜¾ç¤ºç»“æœ*/
 }
 
 void clear(GtkWidget *widget,gpointer data)
@@ -391,7 +404,7 @@ void input_pi (GtkWidget *widget, gpointer data)
 
 void addsignal()
 {
-        /* ÏÂÃæµÄ17¸ö°´Å¥ÊµÏÖÊı×ÖµÄÊäÈë*/
+        /* ä¸‹é¢çš„17ä¸ªæŒ‰é’®å®ç°æ•°å­—çš„è¾“å…¥*/
         g_signal_connect (G_OBJECT(button1), "clicked", G_CALLBACK(input_pi), NULL);
         g_signal_connect (G_OBJECT(button14), "clicked", G_CALLBACK(input), NULL);
         g_signal_connect (G_OBJECT(button15), "clicked", G_CALLBACK(input), NULL);
@@ -410,13 +423,13 @@ void addsignal()
         g_signal_connect (G_OBJECT(button38), "clicked", G_CALLBACK(input), NULL); /*E*/
         g_signal_connect (G_OBJECT(button42), "clicked", G_CALLBACK(input), NULL); /*F*/
 
-        /*ÏÂÃæµÄ°´Å¥ÊµÏÖĞ¡ÊıµãµÄÊäÈë*/
+        /*ä¸‹é¢çš„æŒ‰é’®å®ç°å°æ•°ç‚¹çš„è¾“å…¥*/
         g_signal_connect (G_OBJECT(button27), "clicked", G_CALLBACK(dot), NULL);
 
-        /*ÏÂÃæµÄ°´Å¥ÊµÏÖÕı¸ººÅµÄÊäÈë*/
+        /*ä¸‹é¢çš„æŒ‰é’®å®ç°æ­£è´Ÿå·çš„è¾“å…¥*/
         g_signal_connect (G_OBJECT(button22), "clicked", G_CALLBACK(Sign), NULL);
 
-        /*ÏÂÃæµÄ°´Å¥ÊµÏÖ¸÷ÖÖÔËËãµÄÊäÈë*/
+        /*ä¸‹é¢çš„æŒ‰é’®å®ç°å„ç§è¿ç®—çš„è¾“å…¥*/
         g_signal_connect (G_OBJECT(button2), "clicked", G_CALLBACK(Sin), NULL);
         g_signal_connect (G_OBJECT(button3), "clicked", G_CALLBACK(Cos), NULL);
         g_signal_connect (G_OBJECT(button4), "clicked", G_CALLBACK(Tan), NULL);
@@ -439,10 +452,10 @@ void addsignal()
         g_signal_connect (G_OBJECT(button40), "clicked", G_CALLBACK(Xor), NULL);
         g_signal_connect (G_OBJECT(button41), "clicked", G_CALLBACK(Floor), NULL);
 
-        /* ÏÂÃæµÄ°´Å¥ÊµÏÖ¸´Î»¹¦ÄÜ*/
+        /* ä¸‹é¢çš„æŒ‰é’®å®ç°å¤ä½åŠŸèƒ½*/
         g_signal_connect (G_OBJECT(button34), "clicked", G_CALLBACK(clear),NULL);
 
-        /* ÏÂÃæµÄ°´Å¥ÊµÏÖ½á¹ûÊä³ö*/
+        /* ä¸‹é¢çš„æŒ‰é’®å®ç°ç»“æœè¾“å‡º*/
         g_signal_connect (G_OBJECT(button5), "clicked", G_CALLBACK(output),NULL);
-        g_signal_connect (G_OBJECT(window),"delete_event" ,gtk_main_quit, NULL);
+        g_signal_connect (G_OBJECT(window),"delete_event" ,G_CALLBACK(gtk_main_quit), NULL);
 }
