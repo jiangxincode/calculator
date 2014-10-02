@@ -32,4 +32,4 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 GTK版本控制问题。
 表达式计算。
 
-![Alt text][calculator.png]
+![Alt text][https://raw.githubusercontent.com/jiangxincode/calculator/master/data/calculator.png]
