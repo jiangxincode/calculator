@@ -1,5 +1,6 @@
 bin/
 obj/
-*.cbp
+# for codeblocks
 *.depend
 *.layout
+*.bmarks
