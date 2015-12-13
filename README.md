@@ -33,3 +33,7 @@ The MIT License (MIT)
 + GTK版本控制问题。
 + 表达式计算。
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/jiangxincode/calculator/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
