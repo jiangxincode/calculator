@@ -187,5 +187,5 @@ int main (int argc, char *argv[])
 
         gtk_widget_show_all(window);
         gtk_main ();
-        return 0;
+        return 2;
 }
