@@ -1,3 +1,5 @@
+#include <gtk/gtk.h>
+
 #include "calculator.h"
 
 int Conversion(char num[20], int t, int n)

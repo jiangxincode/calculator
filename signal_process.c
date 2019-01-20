@@ -1,3 +1,5 @@
+#include <gtk/gtk.h>
+
 #include "calculator.h"
 
 GdkPixbuf *create_pixbuf(const gchar *filename)
@@ -15,8 +17,7 @@ GdkPixbuf *create_pixbuf(const gchar *filename)
 
 void on_clicked(GtkWidget *widget, gpointer data)
 {
-
-        if(GTK_TOGGLE_BUTTON(widget)->active)
+        if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget)))
         {
                 if(strncmp((char *)data, "Hex", 3)==0)
                 {

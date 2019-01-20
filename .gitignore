@@ -4,3 +4,5 @@ obj/
 *.depend
 *.layout
 *.bmarks
+Debug/
+.settings/
