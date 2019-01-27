@@ -1,8 +1,8 @@
 CC := gcc
 RM := rm -f
 LIBS =
-CFLAGS += `pkg-config --cflags gtk+-2.0` -Wall -DGTK_DISABLE_SINGLE_INCLUDES -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGSEAL_ENABLE
-LDFLAGS += `pkg-config --libs gtk+-2.0` -lm -Wall
+CFLAGS += `pkg-config --cflags gtk+-3.0` -Wall
+LDFLAGS += `pkg-config --libs gtk+-3.0` -lm -Wall
 TARGET = main
 OBJS = main.o signal_process.o conversion.o
 
