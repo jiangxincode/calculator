@@ -1,6 +1,6 @@
 #include <gtk/gtk.h>
 
-#include "calculator.h"
+#include "../include/calculator.h"
 
 GdkPixbuf *create_pixbuf(const gchar *filename)
 {

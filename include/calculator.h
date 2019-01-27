@@ -1,7 +1,4 @@
-#include <stdio.h>
 #include <math.h>
-#include <string.h>
-#include <stdlib.h>
 
 #include <gtk/gtk.h>
 

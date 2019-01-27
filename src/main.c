@@ -1,9 +1,16 @@
 #include <gtk/gtk.h>
 
-#include "calculator.h"
+#include "../include/calculator.h"
+#include "../include/test_calculator.h"
+
+#define RUN_TEST
 
 int main(int argc, char *argv[])
 {
+#ifdef RUN_TEST
+	test_calculator(argc,argv);
+	return 0;
+#endif
 	a = 0;
 	b = 0;
 	hasdot = 0;
