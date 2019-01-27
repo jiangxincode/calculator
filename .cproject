@@ -55,11 +55,11 @@
                                 								
                                 <option defaultValue="gnu.c.debugging.level.max" id="gnu.c.compiler.option.debugging.level.186902700" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" valueType="enumerated"/>
                                 								
-                                <option id="gnu.c.compiler.option.misc.other.849487034" name="Other flags" superClass="gnu.c.compiler.option.misc.other" useByScannerDiscovery="false" value="-c -fmessage-length=0 `pkg-config --cflags gtk+-2.0`" valueType="string"/>
+                                <option id="gnu.c.compiler.option.misc.other.849487034" name="Other flags" superClass="gnu.c.compiler.option.misc.other" useByScannerDiscovery="false" value="-c -fmessage-length=0 `pkg-config --cflags gtk+-3.0`" valueType="string"/>
                                 								
                                 <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.c.compiler.option.include.paths.1243359623" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
                                     									
-                                    <listOptionValue builtIn="false" value="/usr/include/gtk-2.0"/>
+                                    <listOptionValue builtIn="false" value="/usr/include/gtk-3.0"/>
                                     									
                                     <listOptionValue builtIn="false" value="/usr/include/gdk-pixbuf-2.0"/>
                                     									
@@ -73,7 +73,7 @@
                             							
                             <tool commandLinePattern="${COMMAND} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS} ${FLAGS}" id="cdt.managedbuild.tool.gnu.c.linker.base.577005721" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.base">
                                 								
-                                <option id="gnu.c.link.option.ldflags.352432426" name="Linker flags" superClass="gnu.c.link.option.ldflags" useByScannerDiscovery="false" value="`pkg-config --libs gtk+-2.0` -lm" valueType="string"/>
+                                <option id="gnu.c.link.option.ldflags.352432426" name="Linker flags" superClass="gnu.c.link.option.ldflags" useByScannerDiscovery="false" value="`pkg-config --libs gtk+-3.0` -lm" valueType="string"/>
                                 								
                                 <inputType id="cdt.managedbuild.tool.gnu.c.linker.input.1222946301" superClass="cdt.managedbuild.tool.gnu.c.linker.input">
                                     									

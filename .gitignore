@@ -6,3 +6,5 @@ obj/
 *.bmarks
 Debug/
 .settings/
+*.o
+main

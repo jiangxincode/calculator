@@ -361,13 +361,15 @@ void Floor(GtkWidget *widget,gpointer data)    /*取整*/
         output();
 }
 
-void dot(GtkWidget *widget,gpointer data)
-{
-        if(hasdot==0) /* 没有小数点则添加一个小数点。*/
-        {
-                gtk_entry_append_text (GTK_ENTRY(entry), gtk_button_get_label(GTK_BUTTON(widget)));
-                hasdot=1;/*  表示有一个小数点。*/
-        }
+void dot(GtkWidget *widget, gpointer data) {
+	if (hasdot == 0) /* 没有小数点则添加一个小数点。*/
+	{
+		const gchar *entry_text = gtk_entry_get_text(GTK_ENTRY(entry));
+		gint pos = strlen(entry_text);
+		gtk_editable_insert_text(GTK_EDITABLE(entry),
+				gtk_button_get_label(GTK_BUTTON(widget)), -1, &pos);
+		hasdot = 1;/*  表示有一个小数点。*/
+	}
 }
 
 void Sign(GtkWidget *widget,gpointer data)
@@ -393,9 +395,11 @@ void clear(GtkWidget *widget,gpointer data)
         method=0;
 }
 
-void input (GtkWidget *widget, gpointer data)
-{
-        gtk_entry_append_text (GTK_ENTRY (entry), gtk_button_get_label(GTK_BUTTON(widget)));
+void input(GtkWidget *widget, gpointer data) {
+	const gchar *entry_text = gtk_entry_get_text(GTK_ENTRY(entry));
+	gint pos = strlen(entry_text);
+	gtk_editable_insert_text(GTK_EDITABLE(entry),
+			gtk_button_get_label(GTK_BUTTON(widget)), -1, &pos);
 }
 
 void input_pi (GtkWidget *widget, gpointer data)
