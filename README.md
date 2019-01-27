@@ -2,7 +2,7 @@
     
 ![image](https://raw.githubusercontent.com/jiangxincode/calculator/master/data/calculator.png)
 
-A simple calculator, based on GTK+2.0, and it is easy to extend.
+A simple calculator, based on GTK+3.0, and it is easy to extend.
 
 If you have some advises, please tell me, open a issue, give me a pull request, or send me a email.
 
@@ -30,10 +30,6 @@ The MIT License (MIT)
 ## TODO
 
 + 按钮颜色控制
-+ GTK版本控制问题。
-+ 表达式计算。
-
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/jiangxincode/calculator/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
++ GTK版本控制问题
++ 表达式计算
 

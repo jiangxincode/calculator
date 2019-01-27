@@ -8,21 +8,21 @@
 #ifndef CALCULATOR_H
 #define CALCULATOR_H
 
-double a,b;          /*定义两个参与运算的变量，双精度型*/
+double a, b; /*定义两个参与运算的变量，双精度型*/
 double p;
-int hasdot;          /*是否有小数点*/
-int method;          /*用于区别不同的运算*/
-int principle;       /*标识不同的进制*/
+int hasdot; /*是否有小数点*/
+int method; /*用于区别不同的运算*/
+int principle; /*标识不同的进制*/
 char out[20]; /*输出结果*/
 
-GtkWidget *window;   /*这一部分是定义元件*/
-GtkWidget *vbox;     /*垂直框*/
-GtkWidget *table1;   /*表格1*/
-GtkWidget *table2;   /*表格2*/
+GtkWidget *window; /*这一部分是定义元件*/
+GtkWidget *vbox; /*垂直框*/
+GtkWidget *table1; /*表格1*/
+GtkWidget *table2; /*表格2*/
 GSList *group;
-GtkWidget *radio;    /*单选按钮*/
-GtkWidget *entry;    /*文本框*/
-GtkWidget *button1;  /*42个按钮*/
+GtkWidget *radio; /*单选按钮*/
+GtkWidget *entry; /*文本框*/
+GtkWidget *button1; /*42个按钮*/
 GtkWidget *button2;
 GtkWidget *button3;
 GtkWidget *button4;
@@ -78,37 +78,37 @@ void addsignal();
 
 void Binary_Operator();
 void Right_output();
-float fun(int c) ;
+float fun(int c);
 void output();
 
 GdkPixbuf *create_pixbuf(const gchar *filename);
 
 void on_clicked(GtkWidget *widget, gpointer data);
 void Add(GtkWidget *widget, gpointer data);
-void Sub(GtkWidget *widget,gpointer data);
-void Mul(GtkWidget *widget,gpointer data);
-void Division(GtkWidget *widget,gpointer data);
-void Mathpowxy(GtkWidget *widget,gpointer data);
-void And(GtkWidget *widget,gpointer data);
-void Or(GtkWidget *widget,gpointer data);
-void Xor(GtkWidget *widget,gpointer data);
-void Mod(GtkWidget *widget,gpointer data);
-void Sin(GtkWidget *widget,gpointer data);
-void Cos(GtkWidget *widget,gpointer data);
-void Tan(GtkWidget *widget,gpointer data);
-void Exp(GtkWidget *widget,gpointer data);
-void Cube(GtkWidget *widget,gpointer data);
-void Square(GtkWidget *widget,gpointer data);
-void Log_e(GtkWidget *widget,gpointer data);
-void Log_10(GtkWidget *widget,gpointer data);
-void Factorial(GtkWidget *widget,gpointer data);
-void Inverse(GtkWidget *widget,gpointer data);
-void Not(GtkWidget *widget,gpointer data);
-void Floor(GtkWidget *widget,gpointer data);
-void dot(GtkWidget *widget,gpointer data);
-void Sign(GtkWidget *widget,gpointer data);
-void clear(GtkWidget *widget,gpointer data);
-void input (GtkWidget *widget, gpointer data);
-void input_pi (GtkWidget *widget, gpointer data);
+void Sub(GtkWidget *widget, gpointer data);
+void Mul(GtkWidget *widget, gpointer data);
+void Division(GtkWidget *widget, gpointer data);
+void Mathpowxy(GtkWidget *widget, gpointer data);
+void And(GtkWidget *widget, gpointer data);
+void Or(GtkWidget *widget, gpointer data);
+void Xor(GtkWidget *widget, gpointer data);
+void Mod(GtkWidget *widget, gpointer data);
+void Sin(GtkWidget *widget, gpointer data);
+void Cos(GtkWidget *widget, gpointer data);
+void Tan(GtkWidget *widget, gpointer data);
+void Exp(GtkWidget *widget, gpointer data);
+void Cube(GtkWidget *widget, gpointer data);
+void Square(GtkWidget *widget, gpointer data);
+void Log_e(GtkWidget *widget, gpointer data);
+void Log_10(GtkWidget *widget, gpointer data);
+void Factorial(GtkWidget *widget, gpointer data);
+void Inverse(GtkWidget *widget, gpointer data);
+void Not(GtkWidget *widget, gpointer data);
+void Floor(GtkWidget *widget, gpointer data);
+void dot(GtkWidget *widget, gpointer data);
+void Sign(GtkWidget *widget, gpointer data);
+void clear(GtkWidget *widget, gpointer data);
+void input(GtkWidget *widget, gpointer data);
+void input_pi(GtkWidget *widget, gpointer data);
 
 #endif // CALCULATOR_H
