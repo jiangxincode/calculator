@@ -16,9 +16,9 @@ int principle; /*标识不同的进制*/
 char out[20]; /*输出结果*/
 
 GtkWidget *window; /*这一部分是定义元件*/
-GtkWidget *vbox; /*垂直框*/
-GtkWidget *table1; /*表格1*/
-GtkWidget *table2; /*表格2*/
+GtkWidget *grid0; /*垂直框*/
+GtkWidget *grid1; /*表格1*/
+GtkWidget *grid2; /*表格2*/
 GSList *group;
 GtkWidget *radio; /*单选按钮*/
 GtkWidget *entry; /*文本框*/
