@@ -169,18 +169,18 @@ int main (int argc, char *argv[])
         g_signal_connect(GTK_OBJECT(radio),"clicked",G_CALLBACK(on_clicked),"Hex");
         gtk_table_attach (GTK_TABLE (table1), radio, 0, 1, 1, 2, xoptions, yoptions,0,0);
 
-        group = gtk_radio_button_group (GTK_RADIO_BUTTON(radio));
+        group = gtk_radio_button_get_group (GTK_RADIO_BUTTON(radio));
         radio = gtk_radio_button_new_with_label (group,"Dec");
         g_signal_connect(GTK_OBJECT(radio),"clicked",G_CALLBACK(on_clicked),"Dec");
         gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(radio),TRUE); /*十进制radio设置为默认选中状态*/
         gtk_table_attach (GTK_TABLE (table1), radio, 1, 2, 1, 2, xoptions, yoptions,0,0);
 
-        group = gtk_radio_button_group (GTK_RADIO_BUTTON(radio));
+        group = gtk_radio_button_get_group (GTK_RADIO_BUTTON(radio));
         radio = gtk_radio_button_new_with_label (group,"Oct");
         g_signal_connect(GTK_OBJECT(radio),"clicked", G_CALLBACK(on_clicked),"Oct");
         gtk_table_attach (GTK_TABLE (table1), radio, 2, 3, 1, 2, xoptions, yoptions,0,0);
 
-        group = gtk_radio_button_group (GTK_RADIO_BUTTON(radio));
+        group = gtk_radio_button_get_group (GTK_RADIO_BUTTON(radio));
         radio = gtk_radio_button_new_with_label (group,"Bin");
         g_signal_connect(GTK_OBJECT(radio),"clicked", G_CALLBACK(on_clicked),"Bin");
         gtk_table_attach (GTK_TABLE (table1), radio, 3, 4, 1, 2, xoptions, yoptions,0,0);
