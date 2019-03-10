@@ -9,19 +9,19 @@ OBJS = main.o signal_process.o conversion.o test_calculator.o
 all: $(TARGET)
 
 clean:
-		$(RM)  *.exe *.o ${TARGET}
+	$(RM)  *.exe *.o ${TARGET}
 
 main: ${OBJS}
-		$(CC) -o main ${OBJS} ${LDFLAGS}
+	$(CC) -o main ${OBJS} ${LDFLAGS}
 
 main.o: include/calculator.h
-		$(CC) -c src/main.c ${CFLAGS}
+	$(CC) -c src/main.c ${CFLAGS}
 
 signal_process.o: include/calculator.h
-		$(CC) -c src/signal_process.c ${CFLAGS}
+	$(CC) -c src/signal_process.c ${CFLAGS}
 
 conversion.o: include/calculator.h
-		$(CC) -c src/conversion.c ${CFLAGS}
+	$(CC) -c src/conversion.c ${CFLAGS}
 	
 test_calculator.o:
 	$(CC) -c test/test_calculator.c ${CFLAGS}

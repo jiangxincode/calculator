@@ -8,3 +8,4 @@ Debug/
 .settings/
 *.o
 main
+*.po

@@ -33,3 +33,6 @@ The MIT License (MIT)
 + GTK版本控制问题
 + 表达式计算
 
+```sh
+xgettext -k_ -o inter.po main.c
+```

@@ -1,9 +1,17 @@
 #include <gtk/gtk.h>
+#include <libintl.h>
+#include <locale.h>
 
 #include "../include/calculator.h"
 #include "../include/test_calculator.h"
 
-#define RUN_TEST
+#define PACKAGE "calculator"
+#define LOCALEDIR "locale"
+
+#define _(string) gettext(string)
+#define N_(string) string
+
+//#define RUN_TEST
 
 int main(int argc, char *argv[])
 {
@@ -11,6 +19,10 @@ int main(int argc, char *argv[])
 	test_calculator(argc,argv);
 	return 0;
 #endif
+
+	bindtextdomain(PACKAGE, LOCALEDIR);
+	textdomain(PACKAGE);
+
 	a = 0;
 	b = 0;
 	hasdot = 0;
@@ -18,7 +30,8 @@ int main(int argc, char *argv[])
 	method = 0; /*运算方法。*/
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_window_set_title(GTK_WINDOW(window), "GCalculator");
+	// The title will be centered with respect to the width of the box
+	gtk_window_set_title(GTK_WINDOW(window), _("Calculator"));
 	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 	gtk_window_set_icon(GTK_WINDOW(window), create_pixbuf("./data/icon.png"));
 
