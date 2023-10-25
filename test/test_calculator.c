@@ -1,4 +1,4 @@
-#include "../include/test_calculator.h"
+#include "test_calculator.h"
 
 #include <glib.h>
 #include <locale.h>
@@ -30,7 +30,7 @@ static void test2(Fixture *fixture, gconstpointer user_data)
 	g_assert_cmpstr(reverse, ==, "nixgnaij");
 }
 
-int test_calculator(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	g_test_init(&argc, &argv, NULL);
 	// Define the tests.

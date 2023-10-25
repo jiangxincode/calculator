@@ -1,6 +1,6 @@
-# Calculator #
+# Calculator
     
-![image](https://raw.githubusercontent.com/jiangxincode/calculator/master/data/calculator.png)
+![image](https://raw.githubusercontent.com/wiki/jiangxincode/calculator/calculator.png)
 
 A simple calculator, based on GTK+3.0, and it is easy to extend.
 
@@ -10,6 +10,13 @@ Have a good time on it.
 
 + Aloys
 + jiangxinnju@163.com
+
+## Project Structure
+
+* `res/`: The resources of this project, for example: icon
+* `include/`: The include file used in other source files
+* `src`: The program source files
+* `test`: The unit test source files
 
 ## License
 

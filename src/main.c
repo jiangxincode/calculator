@@ -3,15 +3,12 @@
 #include <locale.h>
 
 #include "../include/calculator.h"
-#include "../include/test_calculator.h"
 
 #define PACKAGE "calculator"
 #define LOCALEDIR "locale"
 
 #define _(string) gettext(string)
 #define N_(string) string
-
-//#define RUN_TEST
 
 double a, b; /*定义两个参与运算的变量，双精度型*/
 double p;
@@ -72,11 +69,6 @@ GtkWidget *button42;
 
 int main(int argc, char *argv[])
 {
-#ifdef RUN_TEST
-	test_calculator(argc,argv);
-	return 0;
-#endif
-
 	bindtextdomain(PACKAGE, LOCALEDIR);
 	textdomain(PACKAGE);
 
@@ -90,7 +82,7 @@ int main(int argc, char *argv[])
 	// The title will be centered with respect to the width of the box
 	gtk_window_set_title(GTK_WINDOW(window), _("Calculator"));
 	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
-	gtk_window_set_icon(GTK_WINDOW(window), create_pixbuf("./data/icon.png"));
+	gtk_window_set_icon(GTK_WINDOW(window), create_pixbuf("./res/icon.png"));
 
 	grid0 = gtk_grid_new();
 	gtk_container_add(GTK_CONTAINER(window), grid0);

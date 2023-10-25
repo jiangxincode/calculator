@@ -3,8 +3,9 @@ RM := rm -f
 LIBS =
 CFLAGS += `pkg-config --cflags gtk+-3.0` -Wall
 LDFLAGS += `pkg-config --libs gtk+-3.0` -lm -Wall
-TARGET = main
-OBJS = main.o signal_process.o conversion.o test_calculator.o
+TARGET = main main_test
+OBJS = main.o signal_process.o conversion.o
+TEST_OBJES = test_calculator.o
 
 all: $(TARGET)
 
@@ -22,6 +23,9 @@ signal_process.o: include/calculator.h
 
 conversion.o: include/calculator.h
 	$(CC) -c src/conversion.c ${CFLAGS}
+
+main_test: ${TEST_OBJES}
+	$(CC) -o main_test ${TEST_OBJES} ${LDFLAGS}
 	
 test_calculator.o:
 	$(CC) -c test/test_calculator.c ${CFLAGS}
