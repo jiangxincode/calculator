@@ -67,7 +67,7 @@ GtkWidget *button40;
 GtkWidget *button41;
 GtkWidget *button42;
 
-int main(int argc, char *argv[])
+static void activate (GtkApplication *app, gpointer user_data)
 {
 	bindtextdomain(PACKAGE, LOCALEDIR);
 	textdomain(PACKAGE);
@@ -75,17 +75,16 @@ int main(int argc, char *argv[])
 	a = 0;
 	b = 0;
 	hasdot = 0;
-	gtk_init(&argc, &argv);
+	gtk_init();
 	method = 0; /*运算方法。*/
 
-	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	window = gtk_application_window_new(app);
 	// The title will be centered with respect to the width of the box
 	gtk_window_set_title(GTK_WINDOW(window), _("Calculator"));
-	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
-	gtk_window_set_icon(GTK_WINDOW(window), create_pixbuf("./res/icon.png"));
+	//gtk_window_set_icon(GTK_WINDOW(window), create_pixbuf("./res/icon.png"));
 
 	grid0 = gtk_grid_new();
-	gtk_container_add(GTK_CONTAINER(window), grid0);
+	gtk_window_set_child (GTK_WINDOW (window), grid0);
 
 	grid1 = gtk_grid_new();
 	grid2 = gtk_grid_new();
@@ -231,33 +230,41 @@ int main(int argc, char *argv[])
 	gtk_grid_attach(GTK_GRID(grid2), button42, 8, 4, 1, 1);
 
 	/*下面是创建四个单选按钮，并将"十进制"按钮设置为默认选中*/
-	radio = gtk_radio_button_new_with_label(NULL, "Hex");
-	g_signal_connect(GTK_WIDGET(radio), "clicked", G_CALLBACK(on_clicked),
-			"Hex");
-	gtk_grid_attach(GTK_GRID(grid1), radio, 0, 1, 2, 1);
+	GtkWidget *radio1 = gtk_toggle_button_new_with_label("Hex");
+	g_signal_connect(GTK_WIDGET(radio1), "clicked", G_CALLBACK(on_clicked), "Hex");
+	gtk_grid_attach(GTK_GRID(grid1), radio1, 0, 1, 2, 1);
 
-	group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(radio));
-	radio = gtk_radio_button_new_with_label(group, "Dec");
-	g_signal_connect(GTK_WIDGET(radio), "clicked", G_CALLBACK(on_clicked),
-			"Dec");
-	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(radio), TRUE); /*十进制radio设置为默认选中状态*/
-	gtk_grid_attach(GTK_GRID(grid1), radio, 2, 1, 2, 1);
+	GtkWidget *radio2 = gtk_toggle_button_new_with_label("Dec");
+	gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(radio1), GTK_TOGGLE_BUTTON(radio2));
+	g_signal_connect(GTK_WIDGET(radio2), "clicked", G_CALLBACK(on_clicked), "Dec");
+	principle = 10;
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(radio2), TRUE); /*十进制radio设置为默认选中状态*/
+	gtk_grid_attach(GTK_GRID(grid1), radio2, 2, 1, 2, 1);
 
-	group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(radio));
-	radio = gtk_radio_button_new_with_label(group, "Oct");
-	g_signal_connect(GTK_WIDGET(radio), "clicked", G_CALLBACK(on_clicked),
-			"Oct");
-	gtk_grid_attach(GTK_GRID(grid1), radio, 4, 1, 2, 1);
+	GtkWidget *radio3 = gtk_toggle_button_new_with_label("Oct");
+	gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(radio1), GTK_TOGGLE_BUTTON(radio3));
+	g_signal_connect(GTK_WIDGET(radio3), "clicked", G_CALLBACK(on_clicked), "Oct");
+	gtk_grid_attach(GTK_GRID(grid1), radio3, 4, 1, 2, 1);
 
-	group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(radio));
-	radio = gtk_radio_button_new_with_label(group, "Bin");
-	g_signal_connect(GTK_WIDGET(radio), "clicked", G_CALLBACK(on_clicked),
-			"Bin");
-	gtk_grid_attach(GTK_GRID(grid1), radio, 6, 1, 2, 1);
+	GtkWidget *radio4 = gtk_toggle_button_new_with_label("Bin");
+	gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(radio1), GTK_TOGGLE_BUTTON(radio4));
+	g_signal_connect(GTK_WIDGET(radio4), "clicked", G_CALLBACK(on_clicked), "Bin");
+	gtk_grid_attach(GTK_GRID(grid1), radio4, 6, 1, 2, 1);
 
 	addsignal(); /*添加事件。*/
 
-	gtk_widget_show_all(window);
-	gtk_main();
-	return 0;
+	gtk_widget_show (window);
+}
+
+int main(int argc, char *argv[])
+{
+  GtkApplication *app;
+  int status;
+
+  app = gtk_application_new ("edu.jiangxin.calculator", G_APPLICATION_FLAGS_NONE);
+  g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
+  status = g_application_run (G_APPLICATION (app), argc, argv);
+  g_object_unref (app);
+
+  return status;
 }

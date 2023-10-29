@@ -1,8 +1,8 @@
 CC := gcc
 RM := rm -f
 LIBS =
-CFLAGS += `pkg-config --cflags gtk+-3.0` -Wall
-LDFLAGS += `pkg-config --libs gtk+-3.0` -lm -Wall
+CFLAGS += `pkg-config --cflags gtk4` -Wall -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -g
+LDFLAGS += `pkg-config --libs gtk4` -lm -Wall
 TARGET = main main_test
 OBJS = main.o signal_process.o conversion.o
 TEST_OBJES = test_calculator.o

@@ -50,12 +50,12 @@ void on_clicked(GtkWidget *widget, gpointer data)
 void Binary_Operator() /*双目运算*/
 {
 	char num[20];
-	strcpy(num, gtk_entry_get_text(GTK_ENTRY(entry)));/*取得文本框的内容*/
+	strcpy(num, gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(entry))));/*取得文本框的内容*/
 	if (a == 0) /*如果没有第一个数，则存储为第一个数*/
 	{
 		Conversion(num, principle, 10); //全部转为十进制
 		a = p;
-		gtk_entry_set_text(GTK_ENTRY(entry), ""); /*清空文本框*/
+		gtk_entry_buffer_set_text(gtk_entry_get_buffer(GTK_ENTRY(entry)), "", strlen("")); /*清空文本框*/
 	}
 	else /*如果已有第一个数，则应存储为第二个数*/
 	{
@@ -73,7 +73,7 @@ void Right_output() /*单目运算结果输出*/
 		perror("error:Right_output");
 	}
 	Conversion(num, 10, principle); /*将运算结果（十进制字符串）转换成指定进制数*/
-	gtk_entry_set_text(GTK_ENTRY(entry), out); /*显示结果*/
+	gtk_entry_buffer_set_text(gtk_entry_get_buffer(GTK_ENTRY(entry)), out, strlen(out)); /*显示结果*/
 	a = 0;
 	b = 0;
 	method = 0;
@@ -94,14 +94,15 @@ void error_handle(const char* info)
 	a = 0;
 	b = 0;
 	method = 0;
-	gtk_entry_set_text(GTK_ENTRY(entry),
-			g_convert(info, -1, "UTF-8", "GB2312", NULL, NULL, NULL)); /*显示出错信息*/
+	gchar* text = g_convert(info, -1, "UTF-8", "GB2312", NULL, NULL, NULL);
+	gtk_entry_buffer_set_text(gtk_entry_get_buffer(GTK_ENTRY(entry)), text, strlen(text)); /*显示出错信息*/
 }
 
 void output() /*双目运算结果输出*/
 {
+	printf("Test");
 	char num[20];
-	strcpy(num, gtk_entry_get_text(GTK_ENTRY(entry))); /* 取得文本框输入的内容*/
+	strcpy(num, gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(entry)))); /* 取得文本框输入的内容*/
 	Conversion(num, principle, 10); /*将输入的进制数转换为十进制*/
 	b = p;
 	switch (method)
@@ -367,7 +368,7 @@ void dot(GtkWidget *widget, gpointer data)
 {
 	if (hasdot == 0) /* 没有小数点则添加一个小数点。*/
 	{
-		const gchar *entry_text = gtk_entry_get_text(GTK_ENTRY(entry));
+		const gchar *entry_text = gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(entry)));
 		gint pos = strlen(entry_text);
 		gtk_editable_insert_text(GTK_EDITABLE(entry),
 				gtk_button_get_label(GTK_BUTTON(widget)), -1, &pos);
@@ -379,19 +380,19 @@ void Sign(GtkWidget *widget, gpointer data)
 {
 	char num[20];
 	float c;
-	strcpy(num, gtk_entry_get_text(GTK_ENTRY(entry)));/*取得文本框的内容。*/
+	strcpy(num, gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(entry))));/*取得文本框的内容。*/
 	c = atof(num); /*转换成浮点型*/
 	c = -c;
 	if (gcvt(c, 32, num) == NULL) /*结果转换成字符串*/
 	{
 		perror("error:Sign");
 	}
-	gtk_entry_set_text(GTK_ENTRY(entry), num); /*显示结果*/
+	gtk_entry_buffer_set_text(gtk_entry_get_buffer(GTK_ENTRY(entry)), num, strlen(num)); /*显示结果*/
 }
 
 void clear(GtkWidget *widget, gpointer data)
 {
-	gtk_entry_set_text(GTK_ENTRY(entry), "");
+	gtk_entry_buffer_set_text(gtk_entry_get_buffer(GTK_ENTRY(entry)), "", 0);
 	hasdot = 0;
 	a = 0;
 	b = 0;
@@ -401,7 +402,7 @@ void clear(GtkWidget *widget, gpointer data)
 void input(GtkWidget *widget, gpointer data)
 {
 
-	const gchar *entry_text = gtk_entry_get_text(GTK_ENTRY(entry));
+	const gchar *entry_text = gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(entry)));
 	gint pos = strlen(entry_text);
 	gtk_editable_insert_text(GTK_EDITABLE(entry),
 			gtk_button_get_label(GTK_BUTTON(widget)), -1, &pos);
@@ -409,7 +410,8 @@ void input(GtkWidget *widget, gpointer data)
 
 void input_pi(GtkWidget *widget, gpointer data)
 {
-	gtk_entry_set_text(GTK_ENTRY(entry), "3.1415926535897932384626433832795");
+	gchar* text = "3.1415926535897932384626433832795";
+	gtk_entry_buffer_set_text(gtk_entry_get_buffer(GTK_ENTRY(entry)), text, strlen(text));
 }
 
 void addsignal()
@@ -468,6 +470,5 @@ void addsignal()
 
 	/* 下面的按钮实现结果输出*/
 	g_signal_connect(G_OBJECT(button5), "clicked", G_CALLBACK(output), NULL);
-	g_signal_connect(G_OBJECT(window), "delete_event",
-			G_CALLBACK(gtk_main_quit), NULL);
+	g_signal_connect(G_OBJECT(window), "destroy", G_CALLBACK(g_main_loop_quit), NULL);
 }
