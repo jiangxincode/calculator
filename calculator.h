@@ -8,62 +8,62 @@
 #ifndef CALCULATOR_H
 #define CALCULATOR_H
 
-double a,b;          /*定义两个参与运算的变量，双精度型*/
-double p;
-int hasdot;          /*是否有小数点*/
-int method;          /*用于区别不同的运算*/
-int principle;       /*标识不同的进制*/
-char out[20]; /*输出结果*/
+extern double a,b;          /*定义两个参与运算的变量，双精度型*/
+extern double p;
+extern int hasdot;          /*是否有小数点*/
+extern int method;          /*用于区别不同的运算*/
+extern int principle;       /*标识不同的进制*/
+extern char out[20]; /*输出结果*/
 
-GtkWidget *window;   /*这一部分是定义元件*/
-GtkWidget *vbox;     /*垂直框*/
-GtkWidget *table1;   /*表格1*/
-GtkWidget *table2;   /*表格2*/
-GSList *group;
-GtkWidget *radio;    /*单选按钮*/
-GtkWidget *entry;    /*文本框*/
-GtkWidget *button1;  /*42个按钮*/
-GtkWidget *button2;
-GtkWidget *button3;
-GtkWidget *button4;
-GtkWidget *button5;
-GtkWidget *button6;
-GtkWidget *button7;
-GtkWidget *button8;
-GtkWidget *button9;
-GtkWidget *button10;
-GtkWidget *button11;
-GtkWidget *button12;
-GtkWidget *button13;
-GtkWidget *button14;
-GtkWidget *button15;
-GtkWidget *button16;
-GtkWidget *button17;
-GtkWidget *button18;
-GtkWidget *button19;
-GtkWidget *button20;
-GtkWidget *button21;
-GtkWidget *button22;
-GtkWidget *button23;
-GtkWidget *button24;
-GtkWidget *button25;
-GtkWidget *button26;
-GtkWidget *button27;
-GtkWidget *button28;
-GtkWidget *button29;
-GtkWidget *button30;
-GtkWidget *button31;
-GtkWidget *button32;
-GtkWidget *button33;
-GtkWidget *button34;
-GtkWidget *button35;
-GtkWidget *button36;
-GtkWidget *button37;
-GtkWidget *button38;
-GtkWidget *button39;
-GtkWidget *button40;
-GtkWidget *button41;
-GtkWidget *button42;
+extern GtkWidget *window;   /*这一部分是定义元件*/
+extern GtkWidget *vbox;     /*垂直框*/
+extern GtkWidget *table1;   /*表格1*/
+extern GtkWidget *table2;   /*表格2*/
+extern GSList *group;
+extern GtkWidget *radio;    /*单选按钮*/
+extern GtkWidget *entry;    /*文本框*/
+extern GtkWidget *button1;  /*42个按钮*/
+extern GtkWidget *button2;
+extern GtkWidget *button3;
+extern GtkWidget *button4;
+extern GtkWidget *button5;
+extern GtkWidget *button6;
+extern GtkWidget *button7;
+extern GtkWidget *button8;
+extern GtkWidget *button9;
+extern GtkWidget *button10;
+extern GtkWidget *button11;
+extern GtkWidget *button12;
+extern GtkWidget *button13;
+extern GtkWidget *button14;
+extern GtkWidget *button15;
+extern GtkWidget *button16;
+extern GtkWidget *button17;
+extern GtkWidget *button18;
+extern GtkWidget *button19;
+extern GtkWidget *button20;
+extern GtkWidget *button21;
+extern GtkWidget *button22;
+extern GtkWidget *button23;
+extern GtkWidget *button24;
+extern GtkWidget *button25;
+extern GtkWidget *button26;
+extern GtkWidget *button27;
+extern GtkWidget *button28;
+extern GtkWidget *button29;
+extern GtkWidget *button30;
+extern GtkWidget *button31;
+extern GtkWidget *button32;
+extern GtkWidget *button33;
+extern GtkWidget *button34;
+extern GtkWidget *button35;
+extern GtkWidget *button36;
+extern GtkWidget *button37;
+extern GtkWidget *button38;
+extern GtkWidget *button39;
+extern GtkWidget *button40;
+extern GtkWidget *button41;
+extern GtkWidget *button42;
 
 void show_all();
 void show_Bin_window();

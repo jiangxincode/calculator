@@ -6,3 +6,7 @@ obj/
 *.bmarks
 Debug/
 .settings/
+
+# for Makefile
+*.o
+main
