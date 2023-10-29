@@ -1,6 +1,6 @@
 # Calculator
     
-![image](https://raw.githubusercontent.com/wiki/jiangxincode/calculator/calculator.png)
+![image](https://raw.githubusercontent.com/wiki/jiangxincode/calculator/calculator-gtk-3.png)
 
 A simple calculator, based on GTK+3.0, and it is easy to extend.
 

@@ -1,6 +1,7 @@
 #include <gtk/gtk.h>
 #include <libintl.h>
 #include <locale.h>
+#include <stdbool.h>
 
 #include "../include/calculator.h"
 
@@ -86,12 +87,15 @@ int main(int argc, char *argv[])
 
 	grid0 = gtk_grid_new();
 	gtk_container_add(GTK_CONTAINER(window), grid0);
+    gtk_grid_set_column_homogeneous(GTK_GRID(grid0), true);
 
 	grid1 = gtk_grid_new();
 	grid2 = gtk_grid_new();
 
-	gtk_grid_attach(GTK_GRID(grid0), grid1, 0, 0, 8, 2);
-	gtk_grid_attach(GTK_GRID(grid0), grid2, 0, 2, 8, 5);
+	gtk_grid_attach(GTK_GRID(grid0), grid1, 0, 0, 9, 2);
+	gtk_grid_set_column_homogeneous(GTK_GRID(grid1), true);
+	gtk_grid_attach(GTK_GRID(grid0), grid2, 0, 2, 9, 5);
+	gtk_grid_set_column_homogeneous(GTK_GRID(grid2), true);
 
 	entry = gtk_entry_new(); /*用于输入和输出的文本框*/
 	gtk_grid_attach(GTK_GRID(grid1), entry, 0, 0, 8, 1);
