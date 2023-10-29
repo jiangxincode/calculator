@@ -470,5 +470,4 @@ void addsignal()
 
 	/* 下面的按钮实现结果输出*/
 	g_signal_connect(G_OBJECT(button5), "clicked", G_CALLBACK(output), NULL);
-	g_signal_connect(G_OBJECT(window), "destroy", G_CALLBACK(g_main_loop_quit), NULL);
 }

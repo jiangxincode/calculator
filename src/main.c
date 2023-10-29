@@ -85,15 +85,24 @@ static void activate (GtkApplication *app, gpointer user_data)
 
 	grid0 = gtk_grid_new();
 	gtk_window_set_child (GTK_WINDOW (window), grid0);
+	gtk_grid_set_column_homogeneous(GTK_GRID(grid0), true);
+	gtk_grid_set_column_spacing(GTK_GRID(grid0), 1);
+	gtk_grid_set_row_spacing(GTK_GRID(grid0), 1);
 
 	grid1 = gtk_grid_new();
 	grid2 = gtk_grid_new();
 
-	gtk_grid_attach(GTK_GRID(grid0), grid1, 0, 0, 8, 2);
-	gtk_grid_attach(GTK_GRID(grid0), grid2, 0, 2, 8, 5);
+	gtk_grid_attach(GTK_GRID(grid0), grid1, 0, 0, 9, 2);
+	gtk_grid_set_column_homogeneous(GTK_GRID(grid1), true);
+	gtk_grid_set_column_spacing(GTK_GRID(grid1), 1);
+	gtk_grid_set_row_spacing(GTK_GRID(grid1), 1);
+	gtk_grid_attach(GTK_GRID(grid0), grid2, 0, 2, 9, 5);
+	gtk_grid_set_column_homogeneous(GTK_GRID(grid2), true);
+	gtk_grid_set_column_spacing(GTK_GRID(grid2), 1);
+	gtk_grid_set_row_spacing(GTK_GRID(grid2), 1);
 
 	entry = gtk_entry_new(); /*用于输入和输出的文本框*/
-	gtk_grid_attach(GTK_GRID(grid1), entry, 0, 0, 8, 1);
+	gtk_grid_attach(GTK_GRID(grid1), entry, 0, 0, 9, 1);
 
 	button1 = gtk_button_new_with_mnemonic("pi"); /*pi*/
 	gtk_grid_attach(GTK_GRID(grid2), button1, 0, 0, 1, 1);
@@ -235,19 +244,19 @@ static void activate (GtkApplication *app, gpointer user_data)
 	gtk_grid_attach(GTK_GRID(grid1), radio1, 0, 1, 2, 1);
 
 	GtkWidget *radio2 = gtk_toggle_button_new_with_label("Dec");
-	gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(radio1), GTK_TOGGLE_BUTTON(radio2));
+	gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(radio2), GTK_TOGGLE_BUTTON(radio1));
 	g_signal_connect(GTK_WIDGET(radio2), "clicked", G_CALLBACK(on_clicked), "Dec");
 	principle = 10;
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(radio2), TRUE); /*十进制radio设置为默认选中状态*/
 	gtk_grid_attach(GTK_GRID(grid1), radio2, 2, 1, 2, 1);
 
 	GtkWidget *radio3 = gtk_toggle_button_new_with_label("Oct");
-	gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(radio1), GTK_TOGGLE_BUTTON(radio3));
+	gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(radio3), GTK_TOGGLE_BUTTON(radio1));
 	g_signal_connect(GTK_WIDGET(radio3), "clicked", G_CALLBACK(on_clicked), "Oct");
 	gtk_grid_attach(GTK_GRID(grid1), radio3, 4, 1, 2, 1);
 
 	GtkWidget *radio4 = gtk_toggle_button_new_with_label("Bin");
-	gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(radio1), GTK_TOGGLE_BUTTON(radio4));
+	gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(radio4), GTK_TOGGLE_BUTTON(radio1));
 	g_signal_connect(GTK_WIDGET(radio4), "clicked", G_CALLBACK(on_clicked), "Bin");
 	gtk_grid_attach(GTK_GRID(grid1), radio4, 6, 1, 2, 1);
 
