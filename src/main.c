@@ -10,19 +10,16 @@
 #define _(string) gettext(string)
 #define N_(string) string
 
-double a, b; /*定义两个参与运算的变量，双精度型*/
-double p;
-int hasdot; /*是否有小数点*/
+double first_op, second_op; /*定义两个参与运算的变量，双精度型*/
+double value_in_decimal;
+int has_dot; /*是否有小数点*/
 int method; /*用于区别不同的运算*/
-int principle; /*标识不同的进制*/
+int radix; /*标识不同的进制*/
 char out[20]; /*输出结果*/
 
-GtkWidget *window; /*这一部分是定义元件*/
 GtkWidget *grid0; /*垂直框*/
 GtkWidget *grid1; /*表格1*/
 GtkWidget *grid2; /*表格2*/
-GSList *group;
-GtkWidget *radio; /*单选按钮*/
 GtkWidget *entry; /*文本框*/
 GtkWidget *button1; /*42个按钮*/
 GtkWidget *button2;
@@ -67,18 +64,33 @@ GtkWidget *button40;
 GtkWidget *button41;
 GtkWidget *button42;
 
+static void activate (GtkApplication *app, gpointer user_data);
+
+int main(int argc, char *argv[])
+{
+  GtkApplication *app;
+  int status;
+
+  app = gtk_application_new ("edu.jiangxin.calculator", G_APPLICATION_FLAGS_NONE);
+  g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
+  status = g_application_run (G_APPLICATION (app), argc, argv);
+  g_object_unref (app);
+
+  return status;
+}
+
 static void activate (GtkApplication *app, gpointer user_data)
 {
 	bindtextdomain(PACKAGE, LOCALEDIR);
 	textdomain(PACKAGE);
 
-	a = 0;
-	b = 0;
-	hasdot = 0;
+	first_op = 0;
+	second_op = 0;
+	has_dot = 0;
 	gtk_init();
 	method = 0; /*运算方法。*/
 
-	window = gtk_application_window_new(app);
+	GtkWidget *window = gtk_application_window_new(app);
 	// The title will be centered with respect to the width of the box
 	gtk_window_set_title(GTK_WINDOW(window), _("Calculator"));
 	//gtk_window_set_icon(GTK_WINDOW(window), create_pixbuf("./res/icon.png"));
@@ -104,176 +116,326 @@ static void activate (GtkApplication *app, gpointer user_data)
 	entry = gtk_entry_new(); /*用于输入和输出的文本框*/
 	gtk_grid_attach(GTK_GRID(grid1), entry, 0, 0, 9, 1);
 
-	button1 = gtk_button_new_with_mnemonic("pi"); /*pi*/
+	button1 = gtk_button_new_with_mnemonic("pi");
 	gtk_grid_attach(GTK_GRID(grid2), button1, 0, 0, 1, 1);
 	gtk_widget_set_size_request(button1, 40, 30);
 
-	button2 = gtk_button_new_with_mnemonic("sin"); /*sin*/
+	button2 = gtk_button_new_with_mnemonic("sin");
 	gtk_grid_attach(GTK_GRID(grid2), button2, 0, 1, 1, 1);
 
-	button3 = gtk_button_new_with_mnemonic("cos"); /*cos*/
+	button3 = gtk_button_new_with_mnemonic("cos");
 	gtk_grid_attach(GTK_GRID(grid2), button3, 0, 2, 1, 1);
 
-	button4 = gtk_button_new_with_mnemonic("tan"); /*tan*/
+	button4 = gtk_button_new_with_mnemonic("tan");
 	gtk_grid_attach(GTK_GRID(grid2), button4, 0, 3, 1, 1);
 
-	button5 = gtk_button_new_with_mnemonic("="); /*===*/
+	button5 = gtk_button_new_with_mnemonic("=");
 	gtk_grid_attach(GTK_GRID(grid2), button5, 0, 4, 3, 1);
 
-	button6 = gtk_button_new_with_mnemonic("Exp"); /*Exp*/
+	button6 = gtk_button_new_with_mnemonic("exp");
 	gtk_grid_attach(GTK_GRID(grid2), button6, 1, 0, 1, 1);
 	gtk_widget_set_size_request(button6, 40, 30);
 
-	button7 = gtk_button_new_with_mnemonic("x^y"); /*x^y*/
+	button7 = gtk_button_new_with_mnemonic("x^y");
 	gtk_grid_attach(GTK_GRID(grid2), button7, 1, 1, 1, 1);
 
-	button8 = gtk_button_new_with_mnemonic("x^3"); /*x^3*/
+	button8 = gtk_button_new_with_mnemonic("x^3");
 	gtk_grid_attach(GTK_GRID(grid2), button8, 1, 2, 1, 1);
 
-	button9 = gtk_button_new_with_mnemonic("x^2"); /*x^2*/
+	button9 = gtk_button_new_with_mnemonic("x^2");
 	gtk_grid_attach(GTK_GRID(grid2), button9, 1, 3, 1, 1);
 
-	button10 = gtk_button_new_with_mnemonic("ln"); /*ln*/
+	button10 = gtk_button_new_with_mnemonic("ln");
 	gtk_grid_attach(GTK_GRID(grid2), button10, 2, 0, 1, 1);
 	gtk_widget_set_size_request(button10, 40, 30);
 
-	button11 = gtk_button_new_with_mnemonic("log"); /*log*/
+	button11 = gtk_button_new_with_mnemonic("log");
 	gtk_grid_attach(GTK_GRID(grid2), button11, 2, 1, 1, 1);
 
-	button12 = gtk_button_new_with_mnemonic("n!"); /*n!*/
+	button12 = gtk_button_new_with_mnemonic("n!");
 	gtk_grid_attach(GTK_GRID(grid2), button12, 2, 2, 1, 1);
 
-	button13 = gtk_button_new_with_mnemonic("1/x "); /*1/x*/
+	button13 = gtk_button_new_with_mnemonic("1/x ");
 	gtk_grid_attach(GTK_GRID(grid2), button13, 2, 3, 1, 1);
 
-	button14 = gtk_button_new_with_label("7"); /*数字按钮7*/
+	button14 = gtk_button_new_with_label("7");
 	gtk_grid_attach(GTK_GRID(grid2), button14, 3, 0, 1, 1);
 	gtk_widget_set_size_request(button14, 40, 30);
 
-	button15 = gtk_button_new_with_mnemonic("4"); /*数字按钮4*/
+	button15 = gtk_button_new_with_mnemonic("4");
 	gtk_grid_attach(GTK_GRID(grid2), button15, 3, 1, 1, 1);
 
-	button16 = gtk_button_new_with_mnemonic("1"); /*数字按钮1*/
+	button16 = gtk_button_new_with_mnemonic("1");
 	gtk_grid_attach(GTK_GRID(grid2), button16, 3, 2, 1, 1);
 
-	button17 = gtk_button_new_with_mnemonic("0"); /*数字按钮0*/
+	button17 = gtk_button_new_with_mnemonic("0");
 	gtk_grid_attach(GTK_GRID(grid2), button17, 3, 3, 1, 1);
 
-	button18 = gtk_button_new_with_mnemonic("A"); /*数字按钮A*/
+	button18 = gtk_button_new_with_mnemonic("A");
 	gtk_grid_attach(GTK_GRID(grid2), button18, 3, 4, 1, 1);
 
-	button19 = gtk_button_new_with_mnemonic("8"); /*数字按钮8*/
+	button19 = gtk_button_new_with_mnemonic("8");
 	gtk_grid_attach(GTK_GRID(grid2), button19, 4, 0, 1, 1);
 	gtk_widget_set_size_request(button19, 40, 30);
 
-	button20 = gtk_button_new_with_mnemonic("5"); /*数字按钮5*/
+	button20 = gtk_button_new_with_mnemonic("5");
 	gtk_grid_attach(GTK_GRID(grid2), button20, 4, 1, 1, 1);
 
-	button21 = gtk_button_new_with_mnemonic("2"); /*数字按钮2*/
+	button21 = gtk_button_new_with_mnemonic("2");
 	gtk_grid_attach(GTK_GRID(grid2), button21, 4, 2, 1, 1);
 
-	button22 = gtk_button_new_with_mnemonic("+/-"); /*+/-*/
+	button22 = gtk_button_new_with_mnemonic("+/-");
 	gtk_grid_attach(GTK_GRID(grid2), button22, 4, 3, 1, 1);
 
-	button23 = gtk_button_new_with_mnemonic("B"); /*数字按钮B*/
+	button23 = gtk_button_new_with_mnemonic("B");
 	gtk_grid_attach(GTK_GRID(grid2), button23, 4, 4, 1, 1);
 
-	button24 = gtk_button_new_with_mnemonic("9"); /*数字按钮9*/
+	button24 = gtk_button_new_with_mnemonic("9");
 	gtk_grid_attach(GTK_GRID(grid2), button24, 5, 0, 1, 1);
 	gtk_widget_set_size_request(button24, 40, 30);
 
-	button25 = gtk_button_new_with_mnemonic("6"); /*数字按钮6*/
+	button25 = gtk_button_new_with_mnemonic("6");
 	gtk_grid_attach(GTK_GRID(grid2), button25, 5, 1, 1, 1);
 
-	button26 = gtk_button_new_with_mnemonic("3"); /*数字按钮3*/
+	button26 = gtk_button_new_with_mnemonic("3");
 	gtk_grid_attach(GTK_GRID(grid2), button26, 5, 2, 1, 1);
 
-	button27 = gtk_button_new_with_mnemonic("."); /*小数点*/
+	button27 = gtk_button_new_with_mnemonic(".");
 	gtk_grid_attach(GTK_GRID(grid2), button27, 5, 3, 1, 1);
 
-	button28 = gtk_button_new_with_mnemonic("C"); /*数字按钮C*/
+	button28 = gtk_button_new_with_mnemonic("C");
 	gtk_grid_attach(GTK_GRID(grid2), button28, 5, 4, 1, 1);
 
-	button29 = gtk_button_new_with_mnemonic("/"); /*除法*/
+	button29 = gtk_button_new_with_mnemonic("/");
 	gtk_grid_attach(GTK_GRID(grid2), button29, 6, 0, 1, 1);
 	gtk_widget_set_size_request(button29, 40, 30);
 
-	button30 = gtk_button_new_with_mnemonic("*"); /*乘法*/
+	button30 = gtk_button_new_with_mnemonic("*");
 	gtk_grid_attach(GTK_GRID(grid2), button30, 6, 1, 1, 1);
 
-	button31 = gtk_button_new_with_mnemonic("-"); /*减法*/
+	button31 = gtk_button_new_with_mnemonic("-");
 	gtk_grid_attach(GTK_GRID(grid2), button31, 6, 2, 1, 1);
 
-	button32 = gtk_button_new_with_mnemonic("+"); /*加法*/
+	button32 = gtk_button_new_with_mnemonic("+");
 	gtk_grid_attach(GTK_GRID(grid2), button32, 6, 3, 1, 1);
 
-	button33 = gtk_button_new_with_mnemonic("D"); /*D*/
+	button33 = gtk_button_new_with_mnemonic("D");
 	gtk_grid_attach(GTK_GRID(grid2), button33, 6, 4, 1, 1);
 
-	button34 = gtk_button_new_with_mnemonic("CR"); /*CR*/
+	button34 = gtk_button_new_with_mnemonic("CR");
 	gtk_grid_attach(GTK_GRID(grid2), button34, 7, 0, 2, 1);
 	gtk_widget_set_size_request(button34, 80, 30);
 
-	button35 = gtk_button_new_with_mnemonic("And"); /*And*/
+	button35 = gtk_button_new_with_mnemonic("And");
 	gtk_grid_attach(GTK_GRID(grid2), button35, 7, 1, 1, 1);
 
-	button36 = gtk_button_new_with_mnemonic("Or"); /*Or*/
+	button36 = gtk_button_new_with_mnemonic("Or");
 	gtk_grid_attach(GTK_GRID(grid2), button36, 7, 2, 1, 1);
 
-	button37 = gtk_button_new_with_mnemonic("Mod"); /*Mod*/
+	button37 = gtk_button_new_with_mnemonic("Mod");
 	gtk_grid_attach(GTK_GRID(grid2), button37, 7, 3, 1, 1);
 
-	button38 = gtk_button_new_with_mnemonic("E"); /*E*/
+	button38 = gtk_button_new_with_mnemonic("E");
 	gtk_grid_attach(GTK_GRID(grid2), button38, 7, 4, 1, 1);
 
-	button39 = gtk_button_new_with_mnemonic("Not"); /*Not*/
+	button39 = gtk_button_new_with_mnemonic("Not");
 	gtk_grid_attach(GTK_GRID(grid2), button39, 8, 1, 1, 1);
 
-	button40 = gtk_button_new_with_mnemonic("Xor"); /*Xor*/
+	button40 = gtk_button_new_with_mnemonic("Xor");
 	gtk_grid_attach(GTK_GRID(grid2), button40, 8, 2, 1, 1);
 
-	button41 = gtk_button_new_with_mnemonic("Int"); /*Int*/
+	button41 = gtk_button_new_with_mnemonic("Int");
 	gtk_grid_attach(GTK_GRID(grid2), button41, 8, 3, 1, 1);
 
-	button42 = gtk_button_new_with_mnemonic("F"); /*F*/
+	button42 = gtk_button_new_with_mnemonic("F");
 	gtk_grid_attach(GTK_GRID(grid2), button42, 8, 4, 1, 1);
 
 	/*下面是创建四个单选按钮，并将"十进制"按钮设置为默认选中*/
 	GtkWidget *radio1 = gtk_toggle_button_new_with_label("Hex");
-	g_signal_connect(GTK_WIDGET(radio1), "clicked", G_CALLBACK(on_clicked), "Hex");
+	g_signal_connect(GTK_WIDGET(radio1), "clicked", G_CALLBACK(callback_radix_convert), "Hex");
 	gtk_grid_attach(GTK_GRID(grid1), radio1, 0, 1, 2, 1);
 
 	GtkWidget *radio2 = gtk_toggle_button_new_with_label("Dec");
 	gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(radio2), GTK_TOGGLE_BUTTON(radio1));
-	g_signal_connect(GTK_WIDGET(radio2), "clicked", G_CALLBACK(on_clicked), "Dec");
-	principle = 10;
+	g_signal_connect(GTK_WIDGET(radio2), "clicked", G_CALLBACK(callback_radix_convert), "Dec");
+	radix = 10;
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(radio2), TRUE); /*十进制radio设置为默认选中状态*/
 	gtk_grid_attach(GTK_GRID(grid1), radio2, 2, 1, 2, 1);
 
 	GtkWidget *radio3 = gtk_toggle_button_new_with_label("Oct");
 	gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(radio3), GTK_TOGGLE_BUTTON(radio1));
-	g_signal_connect(GTK_WIDGET(radio3), "clicked", G_CALLBACK(on_clicked), "Oct");
+	g_signal_connect(GTK_WIDGET(radio3), "clicked", G_CALLBACK(callback_radix_convert), "Oct");
 	gtk_grid_attach(GTK_GRID(grid1), radio3, 4, 1, 2, 1);
 
 	GtkWidget *radio4 = gtk_toggle_button_new_with_label("Bin");
 	gtk_toggle_button_set_group(GTK_TOGGLE_BUTTON(radio4), GTK_TOGGLE_BUTTON(radio1));
-	g_signal_connect(GTK_WIDGET(radio4), "clicked", G_CALLBACK(on_clicked), "Bin");
+	g_signal_connect(GTK_WIDGET(radio4), "clicked", G_CALLBACK(callback_radix_convert), "Bin");
 	gtk_grid_attach(GTK_GRID(grid1), radio4, 6, 1, 2, 1);
 
-	addsignal(); /*添加事件。*/
+	add_signal(); /*添加事件。*/
 
 	gtk_widget_show (window);
 }
 
-int main(int argc, char *argv[])
+void show_all()
 {
-  GtkApplication *app;
-  int status;
+	gtk_widget_set_sensitive(button1, TRUE);
+	gtk_widget_set_sensitive(button2, TRUE);
+	gtk_widget_set_sensitive(button3, TRUE);
+	gtk_widget_set_sensitive(button4, TRUE);
+	gtk_widget_set_sensitive(button5, TRUE);
+	gtk_widget_set_sensitive(button6, TRUE);
+	gtk_widget_set_sensitive(button7, TRUE);
+	gtk_widget_set_sensitive(button8, TRUE);
+	gtk_widget_set_sensitive(button9, TRUE);
+	gtk_widget_set_sensitive(button10, TRUE);
+	gtk_widget_set_sensitive(button11, TRUE);
+	gtk_widget_set_sensitive(button12, TRUE);
+	gtk_widget_set_sensitive(button13, TRUE);
+	gtk_widget_set_sensitive(button14, TRUE);
+	gtk_widget_set_sensitive(button15, TRUE);
+	gtk_widget_set_sensitive(button16, TRUE);
+	gtk_widget_set_sensitive(button17, TRUE);
+	gtk_widget_set_sensitive(button18, TRUE);
+	gtk_widget_set_sensitive(button19, TRUE);
+	gtk_widget_set_sensitive(button20, TRUE);
+	gtk_widget_set_sensitive(button21, TRUE);
+	gtk_widget_set_sensitive(button22, TRUE);
+	gtk_widget_set_sensitive(button23, TRUE);
+	gtk_widget_set_sensitive(button24, TRUE);
+	gtk_widget_set_sensitive(button25, TRUE);
+	gtk_widget_set_sensitive(button26, TRUE);
+	gtk_widget_set_sensitive(button27, TRUE);
+	gtk_widget_set_sensitive(button28, TRUE);
+	gtk_widget_set_sensitive(button29, TRUE);
+	gtk_widget_set_sensitive(button30, TRUE);
+	gtk_widget_set_sensitive(button31, TRUE);
+	gtk_widget_set_sensitive(button32, TRUE);
+	gtk_widget_set_sensitive(button33, TRUE);
+	gtk_widget_set_sensitive(button34, TRUE);
+	gtk_widget_set_sensitive(button35, TRUE);
+	gtk_widget_set_sensitive(button36, TRUE);
+	gtk_widget_set_sensitive(button37, TRUE);
+	gtk_widget_set_sensitive(button38, TRUE);
+	gtk_widget_set_sensitive(button39, TRUE);
+	gtk_widget_set_sensitive(button40, TRUE);
+	gtk_widget_set_sensitive(button41, TRUE);
+	gtk_widget_set_sensitive(button42, TRUE);
+}
+void show_bin_window()
+{
+	show_all();
+	gtk_widget_set_sensitive(button1, FALSE);
+	gtk_widget_set_sensitive(button2, FALSE);
+	gtk_widget_set_sensitive(button3, FALSE);
+	gtk_widget_set_sensitive(button4, FALSE);
+	gtk_widget_set_sensitive(button14, FALSE);
+	gtk_widget_set_sensitive(button15, FALSE);
+	gtk_widget_set_sensitive(button18, FALSE);
+	gtk_widget_set_sensitive(button19, FALSE);
+	gtk_widget_set_sensitive(button20, FALSE);
+	gtk_widget_set_sensitive(button21, FALSE);
+	gtk_widget_set_sensitive(button23, FALSE);
+	gtk_widget_set_sensitive(button24, FALSE);
+	gtk_widget_set_sensitive(button25, FALSE);
+	gtk_widget_set_sensitive(button26, FALSE);
+	gtk_widget_set_sensitive(button28, FALSE);
+	gtk_widget_set_sensitive(button33, FALSE);
+	gtk_widget_set_sensitive(button38, FALSE);
+	gtk_widget_set_sensitive(button42, FALSE);
+}
 
-  app = gtk_application_new ("edu.jiangxin.calculator", G_APPLICATION_FLAGS_NONE);
-  g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
-  status = g_application_run (G_APPLICATION (app), argc, argv);
-  g_object_unref (app);
+void show_dec_window()
+{
+	show_all();
+	gtk_widget_set_sensitive(button18, FALSE);
+	gtk_widget_set_sensitive(button23, FALSE);
+	gtk_widget_set_sensitive(button28, FALSE);
+	gtk_widget_set_sensitive(button33, FALSE);
+	gtk_widget_set_sensitive(button38, FALSE);
+	gtk_widget_set_sensitive(button42, FALSE);
+}
 
-  return status;
+void show_hex_window()
+{
+	show_all();
+	gtk_widget_set_sensitive(button1, FALSE);
+	gtk_widget_set_sensitive(button2, FALSE);
+	gtk_widget_set_sensitive(button3, FALSE);
+	gtk_widget_set_sensitive(button4, FALSE);
+}
+
+void show_oct_window()
+{
+	show_all();
+	gtk_widget_set_sensitive(button1, FALSE);
+	gtk_widget_set_sensitive(button2, FALSE);
+	gtk_widget_set_sensitive(button3, FALSE);
+	gtk_widget_set_sensitive(button4, FALSE);
+	gtk_widget_set_sensitive(button18, FALSE);
+	gtk_widget_set_sensitive(button19, FALSE);
+	gtk_widget_set_sensitive(button23, FALSE);
+	gtk_widget_set_sensitive(button24, FALSE);
+	gtk_widget_set_sensitive(button28, FALSE);
+	gtk_widget_set_sensitive(button33, FALSE);
+	gtk_widget_set_sensitive(button38, FALSE);
+	gtk_widget_set_sensitive(button42, FALSE);
+}
+
+void add_signal()
+{
+	/* 下面的17个按钮实现数字的输入*/
+	g_signal_connect(G_OBJECT(button1), "clicked", G_CALLBACK(callback_input_pi), NULL);
+	g_signal_connect(G_OBJECT(button14), "clicked", G_CALLBACK(callback_input), NULL);
+	g_signal_connect(G_OBJECT(button15), "clicked", G_CALLBACK(callback_input), NULL);
+	g_signal_connect(G_OBJECT(button16), "clicked", G_CALLBACK(callback_input), NULL);
+	g_signal_connect(G_OBJECT(button17), "clicked", G_CALLBACK(callback_input), NULL);
+	g_signal_connect(G_OBJECT(button18), "clicked", G_CALLBACK(callback_input), NULL); /*A*/
+	g_signal_connect(G_OBJECT(button19), "clicked", G_CALLBACK(callback_input), NULL);
+	g_signal_connect(G_OBJECT(button20), "clicked", G_CALLBACK(callback_input), NULL);
+	g_signal_connect(G_OBJECT(button21), "clicked", G_CALLBACK(callback_input), NULL);
+	g_signal_connect(G_OBJECT(button23), "clicked", G_CALLBACK(callback_input), NULL); /*B*/
+	g_signal_connect(G_OBJECT(button24), "clicked", G_CALLBACK(callback_input), NULL);
+	g_signal_connect(G_OBJECT(button25), "clicked", G_CALLBACK(callback_input), NULL);
+	g_signal_connect(G_OBJECT(button26), "clicked", G_CALLBACK(callback_input), NULL);
+	g_signal_connect(G_OBJECT(button28), "clicked", G_CALLBACK(callback_input), NULL); /*C*/
+	g_signal_connect(G_OBJECT(button33), "clicked", G_CALLBACK(callback_input), NULL); /*D*/
+	g_signal_connect(G_OBJECT(button38), "clicked", G_CALLBACK(callback_input), NULL); /*E*/
+	g_signal_connect(G_OBJECT(button42), "clicked", G_CALLBACK(callback_input), NULL); /*F*/
+
+	/*下面的按钮实现小数点的输入*/
+	g_signal_connect(G_OBJECT(button27), "clicked", G_CALLBACK(callback_dot), NULL);
+
+	/*下面的按钮实现正负号的输入*/
+	g_signal_connect(G_OBJECT(button22), "clicked", G_CALLBACK(callback_sign), NULL);
+
+	/*下面的按钮实现各种运算的输入*/
+	g_signal_connect(G_OBJECT(button2), "clicked", G_CALLBACK(callback_sin), NULL);
+	g_signal_connect(G_OBJECT(button3), "clicked", G_CALLBACK(callback_cos), NULL);
+	g_signal_connect(G_OBJECT(button4), "clicked", G_CALLBACK(callback_tan), NULL);
+	g_signal_connect(G_OBJECT(button6), "clicked", G_CALLBACK(callback_exp), NULL);
+	g_signal_connect(G_OBJECT(button7), "clicked", G_CALLBACK(callback_pow_x_y), NULL);
+	g_signal_connect(G_OBJECT(button8), "clicked", G_CALLBACK(callback_cube), NULL);
+	g_signal_connect(G_OBJECT(button9), "clicked", G_CALLBACK(callback_square), NULL);
+	g_signal_connect(G_OBJECT(button10), "clicked", G_CALLBACK(callback_log_e), NULL);
+	g_signal_connect(G_OBJECT(button11), "clicked", G_CALLBACK(callback_log_10), NULL);
+	g_signal_connect(G_OBJECT(button12), "clicked", G_CALLBACK(callback_factorial),
+			NULL);
+	g_signal_connect(G_OBJECT(button13), "clicked", G_CALLBACK(callback_inverse), NULL);
+	g_signal_connect(G_OBJECT(button32), "clicked", G_CALLBACK(callback_add), NULL);
+	g_signal_connect(G_OBJECT(button31), "clicked", G_CALLBACK(callback_sub), NULL);
+	g_signal_connect(G_OBJECT(button30), "clicked", G_CALLBACK(callback_mul), NULL);
+	g_signal_connect(G_OBJECT(button29), "clicked", G_CALLBACK(callback_division), NULL);
+	g_signal_connect(G_OBJECT(button35), "clicked", G_CALLBACK(callback_and), NULL);
+	g_signal_connect(G_OBJECT(button36), "clicked", G_CALLBACK(callback_or), NULL);
+	g_signal_connect(G_OBJECT(button37), "clicked", G_CALLBACK(callback_mod), NULL);
+	g_signal_connect(G_OBJECT(button39), "clicked", G_CALLBACK(callback_not), NULL);
+	g_signal_connect(G_OBJECT(button40), "clicked", G_CALLBACK(callback_xor), NULL);
+	g_signal_connect(G_OBJECT(button41), "clicked", G_CALLBACK(callback_floor), NULL);
+
+	/* 下面的按钮实现复位功能*/
+	g_signal_connect(G_OBJECT(button34), "clicked", G_CALLBACK(callback_clear), NULL);
+
+	/* 下面的按钮实现结果输出*/
+	g_signal_connect(G_OBJECT(button5), "clicked", G_CALLBACK(output), NULL);
 }
