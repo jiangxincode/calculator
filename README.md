@@ -17,6 +17,11 @@ Have a good time on it.
 * `src`: The program source files
 * `test`: The unit test source files
 
+## How to build
+
+* `cmake -B build`
+* `cmake --build build`
+
 ## License
 
 The MIT License (MIT)
