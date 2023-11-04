@@ -6,11 +6,11 @@
 #define CALCULATOR_H
 
 extern double first_op, second_op; /*定义两个参与运算的变量，双精度型*/
-extern double value_in_decimal;
+extern double value_in_dec;
 extern int has_dot; /*是否有小数点*/
 extern int method; /*用于区别不同的运算*/
 extern int radix; /*标识不同的进制*/
-extern char out[20]; /*输出结果*/
+extern char out_array[20]; /*输出结果*/
 
 extern GtkWidget *entry; /*文本框*/
 

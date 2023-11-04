@@ -54,13 +54,13 @@ void binary_operator() /*双目运算*/
 	if (first_op == 0) /*如果没有第一个数，则存储为第一个数*/
 	{
 		conversion(num, radix, 10); //全部转为十进制
-		first_op = value_in_decimal;
+		first_op = value_in_dec;
 		gtk_entry_buffer_set_text(gtk_entry_get_buffer(GTK_ENTRY(entry)), "", strlen("")); /*清空文本框*/
 	}
 	else /*如果已有第一个数，则应存储为第二个数*/
 	{
 		conversion(num, radix, 10); //全部转为十进制
-		second_op = value_in_decimal;
+		second_op = value_in_dec;
 	}
 	has_dot = 0; /*表示已经没有小数点*/
 }
@@ -73,7 +73,7 @@ void right_output() /*单目运算结果输出*/
 		perror("error:Right_output");
 	}
 	conversion(num, 10, radix); /*将运算结果（十进制字符串）转换成指定进制数*/
-	gtk_entry_buffer_set_text(gtk_entry_get_buffer(GTK_ENTRY(entry)), out, strlen(out)); /*显示结果*/
+	gtk_entry_buffer_set_text(gtk_entry_get_buffer(GTK_ENTRY(entry)), out_array, strlen(out_array)); /*显示结果*/
 	first_op = 0;
 	second_op = 0;
 	method = 0;
@@ -103,7 +103,7 @@ void output() /*双目运算结果输出*/
 	char num[20];
 	strcpy(num, gtk_entry_buffer_get_text(gtk_entry_get_buffer(GTK_ENTRY(entry)))); /* 取得文本框输入的内容*/
 	conversion(num, radix, 10); /*将输入的进制数转换为十进制*/
-	second_op = value_in_decimal;
+	second_op = value_in_dec;
 	switch (method)
 	{
 	case 0:

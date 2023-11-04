@@ -11,11 +11,11 @@
 #define N_(string) string
 
 double first_op, second_op; /*定义两个参与运算的变量，双精度型*/
-double value_in_decimal;
+double value_in_dec;
 int has_dot; /*是否有小数点*/
 int method; /*用于区别不同的运算*/
 int radix; /*标识不同的进制*/
-char out[20]; /*输出结果*/
+char out_array[20]; /*输出结果*/
 
 GtkWidget *grid0; /*垂直框*/
 GtkWidget *grid1; /*表格1*/
