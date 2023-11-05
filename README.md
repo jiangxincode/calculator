@@ -1,4 +1,7 @@
 # Calculator
+
+[![Build and Release](https://github.com/jiangxincode/calculator/actions/workflows/BuildAndRelease.yml/badge.svg)](https://github.com/jiangxincode/calculator/actions/workflows/BuildAndRelease.yml)
+
     
 ![image](https://raw.githubusercontent.com/wiki/jiangxincode/calculator/calculator-gtk-4.png)
 
@@ -19,6 +22,7 @@ Have a good time on it.
 
 ## How to build
 
+* Install GTK, ref: <https://github.com/jiangxincode/calculator/blob/master/.github/workflows/BuildAndRelease.yml>
 * `cmake -B build`
 * `cmake --build build`
 
