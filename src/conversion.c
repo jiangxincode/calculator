@@ -9,7 +9,7 @@ int conversion(char input_array[20], int from_radix, int to_radix)
 	int out_length = 0;
 	value_in_dec = 0;
 	memset(out_array, 0, 20);
-	for (int i = 0; i < strlen(input_array); i++) //主要是分段，以小数点为界限，只转换整数部分
+	for (size_t i = 0; i < strlen(input_array); i++) //主要是分段，以小数点为界限，只转换整数部分
 	{
 		if (input_array[i] == '.')
 		{
@@ -43,7 +43,7 @@ int conversion(char input_array[20], int from_radix, int to_radix)
 
 	if (input_array[dot_index] == '.')
 	{
-		for (int i = dot_index + 1; i < strlen(input_array); i++)
+		for (size_t i = dot_index + 1; i < strlen(input_array); i++)
 		{
 			int digit = 0;
 			if ((input_array[i] >= 'A') && (input_array[i] <= 'F'))
