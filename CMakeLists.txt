@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.14)
 project(calculator C)
 
 set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED ON)
 
 include_directories(include)
 
@@ -13,6 +14,7 @@ add_executable(calculator
     src/conversion.c
     src/signal_process.c)
 target_link_libraries(calculator PRIVATE PkgConfig::GTK4 m)
+target_compile_options(calculator PRIVATE -Wall -Wextra)
 
 add_executable(calculator_test
     test/test_calculator.c
